@@ -1,7 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import sits from "../../assets/images/sits.png";
 import { Button } from "../ui/button";
 
+
 const Header = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+  };
+
   return (
     <>
       <nav className="top-0 z-20 w-full max-w-screen-xl mx-auto bg-white">
@@ -17,8 +29,8 @@ const Header = () => {
             ></img>
           </a>
           <div className="flex gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-            <button>Iniciar Sesion</button>
-            <Button >Registrarse</Button>
+          <button onClick={handleLoginClick}>Iniciar Sesion</button>
+          <Button onClick={handleRegisterClick}>Registrarse</Button>
             <button
               data-collapse-toggle="navbar-sticky"
               type="button"

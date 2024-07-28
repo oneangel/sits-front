@@ -23,7 +23,7 @@ function Landing() {
             beneficios tangibles para trabajadores y sus familias.
           </p>
           <div className="flex flex-row gap-5 mt-10">
-            <Button className="bg-[#E53170] h-12 w-28">Comenzar</Button>
+            <Button className="bg-[#E53170] h-12 w-28" >Comenzar</Button>
             <Button className="h-12 bg-transparent border border-white w-28">
               Registrarse
             </Button>
@@ -68,7 +68,7 @@ function Landing() {
         </div>
       </div>
 
-      {/* Section 3 */}
+        {/* Section 3 */}
       <div className="w-full h-[570px] bg-[#FFF7EE]">
         <div className="grid h-full max-w-screen-xl grid-cols-3 mx-auto">
           <div className="flex items-center justify-center w-full col-span-1">
