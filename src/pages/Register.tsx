@@ -27,7 +27,7 @@ const Register = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e. preventDefault();
         const form = new FormData();
         for (const key in formData) {
             form.append(key, formData[key]);
