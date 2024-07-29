@@ -1,41 +1,142 @@
-import React from "react";
-import { Input } from "@/components/ui/input";
-import { IconUpload } from "@tabler/icons-react";
-import { Button } from "@/components/ui/button";
+// Register.js
+import React, { useState } from 'react';
+import axios from 'axios';
 
-interface FileUploadInputProps {
-  label: string;
-}
+const Register = () => {
+    const [formData, setFormData] = useState({
+        nombre: '',
+        CURP: '',
+        password: '',
+        confirmPassword: '',
+        fechaDeNacimiento: '',
+    });
+    const [files, setFiles] = useState({});
 
-const FileUploadInput: React.FC<FileUploadInputProps> = ({ label }) => (
-  <div className="flex w-full h-10 px-3 py-2 text-sm border rounded-md border-input bg-background ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-    <label className="flex items-center space-x-2 cursor-pointer">
-      <IconUpload />
-      <span>{label}</span>
-      <Input type="file" className="hidden" />
-    </label>
-  </div>
-);
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value,
+        });
+    };
 
-function Register() {
-  return (
-    <>
-      <div className="grid w-screen grid-cols-5">
-        <div className="h-screen col-span-2"></div>
-        <div className="h-screen col-span-3 p-4 space-y-4">
-          <Input type="text" placeholder="CURP" />
+    const handleFileChange = (e) => {
+        setFiles({
+            ...files,
+            [e.target.name]: e.target.files[0],
+        });
+    };
 
-          <FileUploadInput label="INE" />
-          <FileUploadInput label="Acta de Nacimiento" />
-          <FileUploadInput label="Comprobante de domicilio" />
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const form = new FormData();
+        for (const key in formData) {
+            form.append(key, formData[key]);
+        }
+        for (const key in files) {
+            form.append(key, files[key]);
+        }
+        try {
+            const res = await axios.post('http://localhost:4000/api/register', form, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
+            alert('User registered successfully');
+        } catch (error) {
+            console.error('Error registering user:', error);
+            alert('An error occurred while registering the user');
+        }
+    };
 
-          <Input type="password" placeholder="Contraseña" />
-          <Input type="password" placeholder="Confirmar Contraseña" />
-          <Button>Registrarse</Button>
-        </div>
-      </div>
-    </>
-  );
-}
+    return (
+        <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+                <label htmlFor="nombre">Nombre</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="CURP">CURP</label>
+                <input
+                    type="text"
+                    id="CURP"
+                    name="CURP"
+                    value={formData.CURP}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <label htmlFor="fechaDeNacimiento">Fecha de Nacimiento</label>
+                <input
+                    type="date"
+                    id="fechaDeNacimiento"
+                    name="fechaDeNacimiento"
+                    value={formData.fechaDeNacimiento}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div>
+                <label htmlFor="INE">INE</label>
+                <input
+                    type="file"
+                    id="INE"
+                    name="INE"
+                    onChange={handleFileChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="actaNacimiento">Acta de Nacimiento</label>
+                <input
+                    type="file"
+                    id="actaNacimiento"
+                    name="actaNacimiento"
+                    onChange={handleFileChange}
+                />
+            </div>
+            <div>
+                <label htmlFor="comprobanteDomicilio">Comprobante de Domicilio</label>
+                <input
+                    type="file"
+                    id="comprobanteDomicilio"
+                    name="comprobanteDomicilio"
+                    onChange={handleFileChange}
+                />
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    );
+};
 
 export default Register;
