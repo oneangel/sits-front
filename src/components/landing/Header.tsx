@@ -64,7 +64,7 @@ const Header = () => {
               <li>
                 <a
                   href="#"
-                  className="block px-3 py-2 text-white rounded md:bg-transparent md:text-orange-500 md:p-0 md:dark:text-blue-500"
+                  className="block px-3 py-2 text-white rounded md:bg-transparent md:text-yellow-500 md:p-0 md:dark:text-blue-500"
                   aria-current="page"
                 >
                   Inicio
