@@ -8,7 +8,6 @@ import l2 from "@/assets/images/l2.png";
 import sits from "@/assets/images/sits.png";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/landing/Card";
-import { Link } from "react-router-dom";
 
 function Landing() {
   return (

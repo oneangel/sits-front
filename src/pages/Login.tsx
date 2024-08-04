@@ -1,9 +1,15 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import loginImage from "@/assets/images/login1.png";
 import { Link } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/overview');
+  };
   return (
     <>
       <div className="grid h-screen grid-cols-2">
@@ -17,7 +23,7 @@ function Login() {
           <Link to="/forgotpasword" className="mt-6 mb-10 text-base">
             ¿Olvidaste tu contraseña?
           </Link>
-          <Button>Iniciar Sesión</Button>
+          <Button onClick={handleLogin}>Iniciar Sesión</Button>
           <Link to="/register" className="mt-10">¿No tienes una cuenta aún? <span className="text-yellow-500">Registrate</span></Link>
         </div>
 

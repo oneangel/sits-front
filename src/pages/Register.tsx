@@ -148,7 +148,7 @@ const Register = () => {
             />
           </div>
 
-          <Button type="submit" className="w-full">Register</Button>
+          <Button type="submit" className="w-full">Registrarse</Button>
         </form>
       </div>
     </div>
