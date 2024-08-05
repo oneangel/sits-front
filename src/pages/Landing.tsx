@@ -15,12 +15,15 @@ function Landing() {
       {/* nav bar */}
       <Header />
       {/* Section 1 */}
-      <div className="bg-gradient-to-br from-yellow-400 to-amber-500 max-w-screen-2xl w-full h-[650px] mx-auto mt-9 rounded-t-[50px] rounded-bl-[50px] rounded-br-[320px] flex-row flex">
-        <div className="w-1/3 my-auto pl-14">
-          <h2 className="text-6xl font-bold text-white w-[540px]">
+      <div
+        id="home"
+        className=" bg-gradient-to-br from-yellow-400 to-amber-500 max-w-screen-2xl w-full h-[650px] mx-auto mt-32 md:rounded-t-[50px] md:rounded-bl-[50px] md:rounded-br-[320px] flex-row flex"
+      >
+        <div className="mx-auto my-auto xl:w-1/3 pl-14">
+          <h2 className="text-4xl font-bold text-white md:text-6xl">
             Fuerza sindical en Norteamérica
           </h2>
-          <p className="text-white mt-9 w-[500px]">
+          <p className="text-white mt-9 ">
             Somos un sindicato nacional que brinda herramientas de calidad y
             beneficios tangibles para trabajadores y sus familias.
           </p>
@@ -32,12 +35,15 @@ function Landing() {
           </div>
         </div>
         <div className="flex w-2/3">
-          <img src={img1} alt="" className="mx-auto my-auto h-[550px]" />
+          <img src={img1} alt="" className="mx-auto my-auto h-[550px] hidden xl:block" />
         </div>
       </div>
 
       {/* Section 2 */}
-      <div className="max-w-screen-xl mx-auto h-[500px] mt-20 flex flex-row">
+      <div
+        id="news"
+        className="#news max-w-screen-xl mx-auto h-[500px] mt-20 flex flex-row"
+      >
         {/* Titulo */}
         <div className="w-1/3">
           <h3 className="w-[350px] text-5xl font-bold">
@@ -71,7 +77,7 @@ function Landing() {
       </div>
 
       {/* Section 3 */}
-      <div className="w-full h-[570px] bg-[#FFF7EE]">
+      <div id="us" className="#us w-full h-[570px] bg-[#FFF7EE]">
         <div className="grid h-full max-w-screen-xl grid-cols-3 mx-auto">
           <div className="flex items-center justify-center w-full col-span-1">
             <img src={teamsits} alt="img" className="" />
@@ -139,7 +145,7 @@ function Landing() {
             Tel. (618)-300-8913
           </a>
           <a href="" className="w-48 text-base text-white">
-            Calle Hilario Moreno #404 Col. Azteca 
+            Calle Hilario Moreno #404 Col. Azteca
           </a>
         </div>
       </div>

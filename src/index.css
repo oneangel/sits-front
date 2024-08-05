@@ -71,4 +71,8 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 

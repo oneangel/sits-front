@@ -1,17 +1,10 @@
+
+
+import { useState, useEffect } from "react";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   Card,
   CardContent,
@@ -42,8 +35,10 @@ import {
 } from "@/components/ui/dialog";
 
 import { Label } from "@radix-ui/react-label";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const Resumen = () => {
+  const [parent] = useAutoAnimate()
   const [beneficiosRecientes, setBeneficiosRecientes] = useState([]);
 
   useEffect(() => {
@@ -93,32 +88,35 @@ const Resumen = () => {
     }
   };
 
-  const [tituloEditado, setTituloEditado] = useState('');
-const [descripcionEditada, setDescripcionEditada] = useState('');
-const [idEditando, setIdEditando] = useState(null);
+  const [tituloEditado, setTituloEditado] = useState("");
+  const [descripcionEditada, setDescripcionEditada] = useState("");
+  const [idEditando, setIdEditando] = useState(null);
 
-const handleEditarBeneficio = (beneficio) => {
-  setTituloEditado(beneficio.titulo);
-  setDescripcionEditada(beneficio.descripcion);
-  setIdEditando(beneficio._id);
-};
+  const handleEditarBeneficio = (beneficio) => {
+    setTituloEditado(beneficio.titulo);
+    setDescripcionEditada(beneficio.descripcion);
+    setIdEditando(beneficio._id);
+  };
 
-const handleGuardarCambios = async () => {
-  try {
-    const beneficioActualizado = {
-      titulo: tituloEditado,
-      descripcion: descripcionEditada,
-    };
-    const response = await axios.put(`https://sits.onrender.com/api/beneficios/${idEditando}`, beneficioActualizado); // Asegúrate de que la URL es correcta
-    setBeneficiosRecientes(
-      beneficiosRecientes.map((beneficio) =>
-        beneficio._id === idEditando ? response.data : beneficio
-      )
-    );
-  } catch (error) {
-    console.error('Error al actualizar beneficio:', error);
-  }
-};
+  const handleGuardarCambios = async () => {
+    try {
+      const beneficioActualizado = {
+        titulo: tituloEditado,
+        descripcion: descripcionEditada,
+      };
+      const response = await axios.put(
+        `https://sits.onrender.com/api/beneficios/${idEditando}`,
+        beneficioActualizado
+      ); // Asegúrate de que la URL es correcta
+      setBeneficiosRecientes(
+        beneficiosRecientes.map((beneficio) =>
+          beneficio._id === idEditando ? response.data : beneficio
+        )
+      );
+    } catch (error) {
+      console.error("Error al actualizar beneficio:", error);
+    }
+  };
 
   return (
     <div>
@@ -134,7 +132,8 @@ const handleGuardarCambios = async () => {
           <DialogHeader>
             <DialogTitle>Agregar Beneficio</DialogTitle>
             <DialogDescription>
-              Añade al beneficio aquí. Haga clic en Guardar haya terminado.
+              Añade el beneficio aquí. Haga clic en Guardar cuando haya
+              terminado.
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-4 py-4">
@@ -162,22 +161,23 @@ const handleGuardarCambios = async () => {
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={handleAgregarBeneficio}>
-              Agregar
-            </Button>
+            <DialogClose asChild>
+              <Button type="submit" onClick={handleAgregarBeneficio}>
+                Agregar
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      <ul>
+      <ul className="grid grid-cols-1 gap-4 mt-10 md:grid-cols-3" ref={parent}>
         {beneficiosRecientes.map((beneficio) => (
-          <Card className="mt-10" key={beneficio._id}>
+          <Card className="col-span-1" key={beneficio._id}>
             <CardHeader>
               <CardTitle>{beneficio.titulo}</CardTitle>
-              <CardDescription>{beneficio.descripcion}</CardDescription>
             </CardHeader>
-            <CardContent>
-              <p>Contenido </p>
+            <CardContent className="max-h-[200px] h-[200px]">
+              <p>{beneficio.descripcion}</p>
             </CardContent>
             <CardFooter className="gap-2">
               <Dialog>
@@ -193,7 +193,7 @@ const handleGuardarCambios = async () => {
                   <DialogHeader>
                     <DialogTitle>Editar Beneficio</DialogTitle>
                     <DialogDescription>
-                      Edita al beneficio aquí. Haga clic en Guardar haya
+                      Edita el beneficio aquí. Haga clic en Guardar cuando haya
                       terminado.
                     </DialogDescription>
                   </DialogHeader>
@@ -225,9 +225,11 @@ const handleGuardarCambios = async () => {
                     </div>
                   </div>
                   <DialogFooter>
-                    <Button type="submit" onClick={handleGuardarCambios}>
-                      Guardar
-                    </Button>
+                    <DialogClose asChild>
+                      <Button type="submit" onClick={handleGuardarCambios}>
+                        Guardar
+                      </Button>
+                    </DialogClose>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
@@ -242,7 +244,7 @@ const handleGuardarCambios = async () => {
                     </AlertDialogTitle>
                     <AlertDialogDescription>
                       Este beneficio no se eliminará permanentemente, podrá
-                      recuperarlo en la sección de beneficios.
+                      recuperarlo en la sección de Administrador.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
