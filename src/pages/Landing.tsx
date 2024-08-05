@@ -17,7 +17,7 @@ function Landing() {
       {/* Section 1 */}
       <div
         id="home"
-        className=" bg-gradient-to-br from-yellow-400 to-amber-500 max-w-screen-2xl w-full h-[650px] mx-auto mt-32 md:rounded-t-[50px] md:rounded-bl-[50px] md:rounded-br-[320px] flex-row flex"
+        className=" bg-gradient-to-br from-yellow-400 to-amber-500 max-w-screen-2xl w-full h-[650px] mx-auto md:mt-32 md:rounded-t-[50px] md:rounded-bl-[50px] md:rounded-br-[320px] flex-row flex"
       >
         <div className="mx-auto my-auto xl:w-1/3 pl-14">
           <h2 className="text-4xl font-bold text-white md:text-6xl">
@@ -35,59 +35,65 @@ function Landing() {
           </div>
         </div>
         <div className="flex w-2/3">
-          <img src={img1} alt="" className="mx-auto my-auto h-[550px] hidden xl:block" />
+          <img
+            src={img1}
+            alt=""
+            className="mx-auto my-auto h-[550px] hidden xl:block"
+          />
         </div>
       </div>
 
       {/* Section 2 */}
       <div
         id="news"
-        className="#news max-w-screen-xl mx-auto h-[500px] mt-20 flex flex-row"
+        className="#news max-w-screen-xl mx-auto mt-20 lg:flex lg:flex-row mb-20"
       >
         {/* Titulo */}
-        <div className="w-1/3">
-          <h3 className="w-[350px] text-5xl font-bold">
+        <div className="px-10 mb-10 lg:w-1/3">
+          <h3 className="text-5xl font-bold">
             Fuerza sindical en Norteamérica
           </h3>
-          <p className="w-[330px] text-lg mt-3 text-[#626479]">
+          <p className="text-lg mt-3 text-[#626479]">
             Nuestro sindicato ofrece beneficios integrales y económicos, como
             apoyo laboral, acceso a vivienda, asistencia médica y representación
             legal gratuita.
           </p>
         </div>
         {/* Cards */}
-        <div className="grid w-2/3 grid-cols-3 gap-9">
+        <div className="grid mx-20 md:mx-0 md:grid-cols-3 lg:w-2/3 gap-9">
           <Card
             imgSrc={shield}
             altText="Escudo"
             text="Nuestro sindicato brinda apoyo integral"
+            className=""
           />
           <Card
             imgSrc={deposit}
             altText="Depósito"
             text="Caja de Ahorro flexible y accesible"
-            className="mt-12"
+            className="lg:mt-12"
           />
           <Card
             imgSrc={money}
             altText="Dinero"
             text="Nuestro sindicato brinda apoyo integral"
+            className=""
           />
         </div>
       </div>
 
       {/* Section 3 */}
-      <div id="us" className="#us w-full h-[570px] bg-[#FFF7EE]">
-        <div className="grid h-full max-w-screen-xl grid-cols-3 mx-auto">
-          <div className="flex items-center justify-center w-full col-span-1">
+      <div id="us" className="#us w-full py-20 bg-[#FFF7EE]">
+        <div className="grid h-full max-w-screen-xl mx-auto lg:grid-cols-3">
+          <div className="flex items-center justify-center w-full col-span-1 mx-20 lg:mx-0">
             <img src={teamsits} alt="img" className="" />
           </div>
-          <div className="flex flex-col items-center justify-center col-span-2">
-            <h3 className="text-5xl font-bold w-[560px]">
+          <div className="flex flex-col items-center justify-center col-span-2 mx-20">
+            <h3 className="text-3xl font-bold md:text-5xl">
               Nuestra <span className="text-yellow-400">Visión</span> y Nuestra
               <span className="text-[#FF8906]"> Misión</span>
             </h3>
-            <p className="w-[560px] text-lg text-[#626479] mt-7">
+            <p className="text-base md:text-lg text-[#626479] mt-7">
               Nuestra visión es ser un sindicato nacional reconocido por apoyar
               el bienestar laboral en México y el T-MEC. Nuestra misión es
               ofrecer beneficios económicos significativos y apoyar a las
@@ -98,30 +104,34 @@ function Landing() {
       </div>
 
       {/* Section 4 */}
-      <div className="w-full max-w-screen-xl bg-gradient-to-br from-yellow-400 to-amber-500 h-[370px] mx-auto rounded-[48px] mt-20 grid grid-cols-3">
-        <div className="flex col-span-1 mx-auto my-auto">
-          <img src={l2} alt="" className="h-[247px]" />
-        </div>
-        <div className="col-span-2 my-auto text-white mr-52">
-          <h2 className="text-5xl font-bold">
+      <div className="max-w-screen-xl bg-gradient-to-br from-yellow-400 to-amber-500 py-20 mx-auto rounded-[48px] mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="col-span-1 mx-4 my-auto text-white md:col-span-2 md:mx-20">
+          <h2 className="text-3xl font-bold md:text-5xl">
             Asesoría gratuita para Plan de Pensión y Modalidad 40
           </h2>
-          <p className="text-lg mt-7">
+          <p className="mt-4 text-base md:text-lg md:mt-7">
             Nuestro Sindicato ofrece asesoría profesional para que los
             trabajadores obtengan la mejor pensión posible, manteniendo su
             calidad de vida, ya sea con su salario promedio o mediante la
             Modalidad 40.
           </p>
         </div>
+        <div className="flex items-center justify-center col-span-1">
+          <img
+            src={l2}
+            alt="Descripción de la imagen"
+            className="h-auto max-w-full"
+          />
+        </div>
       </div>
 
       {/* Footer */}
-      <div className="w-full bg-[#0F0E17] h-[400px] mt-20 grid grid-cols-4 px-20 py-14">
-        <div className="flex flex-col justify-between col-span-1">
+      <div className="w-full bg-[#0F0E17] py-20 mt-20 grid md:grid-cols-4 px-20">
+        <div className="flex justify-between col-span-1 md:flex-col md:h-72">
           <img src={sits} alt="" className="size-20" />
-          <p className="text-white">© SITS todos los derechos reservados</p>
+          <p className="mt-4 text-white md:mt-0">© SITS todos los derechos reservados</p>
         </div>
-        <div className="flex flex-col col-span-1 gap-1">
+        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
           <h3 className="text-lg font-semibold text-white">Plataforma</h3>
           <a href="" className="text-base text-white">
             Inicio
@@ -133,13 +143,13 @@ function Landing() {
             Nosotros
           </a>
         </div>
-        <div className="flex flex-col col-span-1 gap-1">
+        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
           <h3 className="text-lg font-semibold text-white">Ayuda</h3>
           <a href="" className="text-base text-white">
             Preguntas frecuentes
           </a>
         </div>
-        <div className="flex flex-col col-span-1 gap-1">
+        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
           <h3 className="text-lg font-semibold text-white">Contacto</h3>
           <a href="" className="text-base text-white">
             Tel. (618)-300-8913
