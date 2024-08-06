@@ -36,6 +36,9 @@ import {
 
 import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { CommandDash } from "@/components/dashboard/ComandDash";
+
+
 
 const Resumen = () => {
   const [parent] = useAutoAnimate()
@@ -170,7 +173,7 @@ const Resumen = () => {
         </DialogContent>
       </Dialog>
 
-      <ul className="grid grid-cols-1 gap-4 mt-10 md:grid-cols-3" ref={parent}>
+      <ul className="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3" ref={parent}>
         {beneficiosRecientes.map((beneficio) => (
           <Card className="col-span-1" key={beneficio._id}>
             <CardHeader>
@@ -262,6 +265,7 @@ const Resumen = () => {
           </Card>
         ))}
       </ul>
+      
     </div>
   );
 };

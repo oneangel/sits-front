@@ -12,8 +12,8 @@ function Login() {
   };
   return (
     <>
-      <div className="grid h-screen grid-cols-2">
-        <div className="flex flex-col col-span-1 my-auto mx-36">
+      <div className="grid h-screen xl:grid-cols-2">
+        <div className="flex flex-col col-span-1 mx-10 my-auto lg:mx-36">
           <h2 className="text-4xl font-semibold">Iniciar Sesión</h2>
           <p className="text-lg text-[#313131] mt-4 mb-9 ">
             Ingresa tus datos de inicio de sesion para acceder a tu cuenta
@@ -27,7 +27,7 @@ function Login() {
           <Link to="/register" className="mt-10">¿No tienes una cuenta aún? <span className="text-yellow-500">Registrate</span></Link>
         </div>
 
-        <div className="col-span-1 my-auto mx-36">
+        <div className="hidden my-auto lg:block lg:col-span-1 mx-36">
           <div className="bg-gradient-to-br from-yellow-400 to-amber-500 h-[800px] w-[500px] rounded-[48px] flex items-center justify-center">
             <img src={loginImage} alt="" className="" />
           </div>
