@@ -1,9 +1,9 @@
 import Sidebar from "@/components/landing/Sidebar";
-import  { useState } from "react";
+import { useState } from "react";
 import Resumen from "./Resume";
 import Beneficios from "./Beneficios";
 import Beneficiarios from "./Beneficiarios";
-
+import Admin from "./Admin";
 
 const Overview = () => {
   const [activeSection, setActiveSection] = useState("Resumen");
@@ -16,6 +16,8 @@ const Overview = () => {
         return <Beneficios />;
       case "Beneficiarios":
         return <Beneficiarios />;
+      case "Usuarios":
+        return <Admin />;
       default:
         return <Resumen />;
     }
