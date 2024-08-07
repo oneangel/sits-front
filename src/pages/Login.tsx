@@ -15,7 +15,7 @@ function Login() {
   const handleLogin = async () => {
     console.log(CURP, password)
     try {
-      const response = await axios.post('http://localhost:4000/api/login', { CURP, password });
+      const response = await axios.post('https://sits.onrender.com/api/login', { CURP, password });
       console.log(CURP, password)
       // Espera que el backend devuelva datos necesarios para la sesión
       const userData = response.data; 

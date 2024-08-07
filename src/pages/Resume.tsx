@@ -74,7 +74,7 @@ const Resumen = () => {
     };
   
     try {
-      await axios.post("http://localhost:4000/enviar-correo", correoData);
+      await axios.post("https://sits.onrender.com/enviar-correo", correoData);
       console.log("Correo enviado exitosamente");
     } catch (error) {
       console.error("Error al enviar el correo:", error);
