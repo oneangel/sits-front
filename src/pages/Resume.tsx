@@ -1,7 +1,5 @@
-
-
 import { useState, useEffect } from "react";
-import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import axios from "axios";
@@ -33,15 +31,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { CommandDash } from "@/components/dashboard/ComandDash";
 
-
-
 const Resumen = () => {
-  const [parent] = useAutoAnimate()
+  const [parent] = useAutoAnimate();
   const [beneficiosRecientes, setBeneficiosRecientes] = useState([]);
 
   useEffect(() => {
@@ -162,6 +165,26 @@ const Resumen = () => {
                 className="col-span-3"
               />
             </div>
+            <div className="grid items-center grid-cols-4 gap-4">
+              <Label htmlFor="categoria text-right">Categoria</Label>
+              <Select>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Categoria" />
+                </SelectTrigger>
+                <SelectContent className="w-full">
+                  <SelectItem value="1">Económico</SelectItem>
+                  <SelectItem value="2">Esquema Jurídico</SelectItem>
+                  <SelectItem value="3">Salud</SelectItem>
+                  <SelectItem value="4">Familiar</SelectItem>
+                  <SelectItem value="5">Seguro de Vida</SelectItem>
+                  <SelectItem value="6">Descuentos</SelectItem>
+                  <SelectItem value="7">Becas Educativas</SelectItem>
+                  <SelectItem value="8">Asesoría de Vivienda</SelectItem>
+                  <SelectItem value="9">Modalidad 40</SelectItem>
+                  <SelectItem value="0">Gastos funerarios</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
           <DialogFooter>
             <DialogClose asChild>
@@ -265,7 +288,6 @@ const Resumen = () => {
           </Card>
         ))}
       </ul>
-      
     </div>
   );
 };
