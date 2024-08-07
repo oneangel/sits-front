@@ -39,7 +39,7 @@ const Register = () => {
       form.append(key, files[key]);
     }
     try {
-      const res = await axios.post("https://sits.onrender.com/api/register", form, {
+      const res = await axios.post("http://localhost:4000/api/register", form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
