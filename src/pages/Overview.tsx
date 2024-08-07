@@ -1,11 +1,9 @@
 import Sidebar from "@/components/landing/Sidebar";
 import { useState } from "react";
 import Resumen from "./Resume";
-import Beneficios from "./Beneficios";
-import Beneficiarios from "./Beneficiarios";
+import Categorias from "./Categorias";
 import Admin from "./Admin";
 import Navbar from "@/components/dashboard/Navbar";
-
 const Overview = () => {
   const [activeSection, setActiveSection] = useState("Resumen");
 
@@ -13,10 +11,8 @@ const Overview = () => {
     switch (activeSection) {
       case "Resumen":
         return <Resumen />;
-      case "Beneficios":
-        return <Beneficios />;
-      case "Beneficiarios":
-        return <Beneficiarios />;
+      case "Categorias":
+        return <Categorias />;
       case "Usuarios":
         return <Admin />;
       default:
@@ -29,7 +25,7 @@ const Overview = () => {
       <Sidebar setActiveSection={setActiveSection} />
       <div className="flex-1">
         <Navbar setActiveSection={setActiveSection}/>
-        <div className="p-6">{renderSection()}</div>
+        <div className="px-6">{renderSection()}</div>
       </div>
     </div>
   );

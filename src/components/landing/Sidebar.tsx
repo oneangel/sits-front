@@ -1,32 +1,29 @@
 import {
   IconHomeDown,
   IconLayoutDashboardFilled,
+  IconLogout2,
   IconMenu2,
-  IconUsers,
   IconUsersGroup,
   IconX,
 } from "@tabler/icons-react";
+import sits from "../../assets/images/sitshd.png";
 import React, { useState } from "react";
 
 type SidebarProps = {
-  setActiveSection: (
-    section: "Resumen" | "Beneficios" | "Beneficiarios" | "Usuarios"
-  ) => void;
+  setActiveSection: (section: "Resumen" | "Categorias" | "Usuarios") => void;
 };
 
 const Sidebar: React.FC<SidebarProps> = ({ setActiveSection }) => {
   // Estado para rastrear la sección activa
   const [activeSection, setActive] = useState<
-    "Resumen" | "Beneficios" | "Beneficiarios" | "Usuarios"
+    "Resumen" | "Categorias" | "Usuarios"
   >("Resumen");
 
   // Estado para controlar la visibilidad del sidebar
   const [isSidebarVisible, setSidebarVisible] = useState(false);
 
   // Función para manejar el cambio de sección y cerrar el sidebar
-  const handleSectionClick = (
-    section: "Resumen" | "Beneficios" | "Beneficiarios" | "Usuarios"
-  ) => {
+  const handleSectionClick = (section: "Resumen" | "Categorias" | "Usuarios") => {
     setActive(section);
     setActiveSection(section);
 
@@ -41,73 +38,62 @@ const Sidebar: React.FC<SidebarProps> = ({ setActiveSection }) => {
     setSidebarVisible(!isSidebarVisible);
   };
 
+  const sections = [
+    { name: "Resumen", icon: <IconLayoutDashboardFilled /> },
+    { name: "Categorias", icon: <IconHomeDown /> },
+    { name: "Usuarios", icon: <IconUsersGroup /> },
+  ];
+
   return (
     <div className="flex">
       {/* Sidebar */}
       <div
-        className={`fixed px-3 w-64 inset-0 md:relative md:translate-x-0 transition-transform transform bg-white z-50 md:z-auto border-r-2 ${
+        className={`fixed flex flex-col justify-between px-3 w-64 inset-0 md:relative md:translate-x-0 transition-transform transform bg-white z-50 md:z-auto border-r-2 ${
           isSidebarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <h1 className="m-4 text-lg text-zinc-500">Tableros</h1>
-        <ul className="mt-4">
-          <li
-            className={`flex items-center px-6 py-3 text-lg transition cursor-pointer rounded-xl hover:scale-105 ${
-              activeSection === "Resumen"
-                ? "bg-gray-200 hover:bg-gray-300"
-                : "hover:text-yellow-500"
-            }`}
-            onClick={() => handleSectionClick("Resumen")}
-          >
-            <span className="mr-2">
-              <IconLayoutDashboardFilled />
-            </span>
-            Resumen
-          </li>
-          <li
-            className={`flex items-center px-6 py-3 text-lg transition cursor-pointer rounded-xl hover:scale-105 ${
-              activeSection === "Beneficios"
-                ? "bg-gray-200 hover:bg-gray-300"
-                : "hover:text-yellow-500"
-            }`}
-            onClick={() => handleSectionClick("Beneficios")}
-          >
-            <span className="mr-2">
-              <IconHomeDown />
-            </span>
-            Beneficios
-          </li>
-          <li
-            className={`flex items-center px-6 py-3 text-lg transition cursor-pointer rounded-xl hover:scale-105 ${
-              activeSection === "Beneficiarios"
-                ? "bg-gray-200 hover:bg-gray-300"
-                : "hover:text-yellow-500"
-            }`}
-            onClick={() => handleSectionClick("Beneficiarios")}
-          >
-            <span className="mr-2">
-              <IconUsers />
-            </span>
-            Beneficiarios
-          </li>
-        </ul>
+        <div>
+          <h1 className="m-4 text-lg text-zinc-500">Tableros</h1>
+          <ul className="mt-4">
+            {sections.slice(0, 2).map((section) => (
+              <li
+                key={section.name}
+                className={`flex items-center px-6 py-3 text-xl transition cursor-pointer rounded-xl hover:scale-105 ${
+                  activeSection === section.name
+                    ? "bg-primary text-white hover:bg-yellow-500"
+                    : "hover:text-yellow-500"
+                }`}
+                onClick={() => handleSectionClick(section.name as any)}
+              >
+                <span className="mr-2">{section.icon}</span>
+                {section.name}
+              </li>
+            ))}
+          </ul>
 
-        <h1 className="m-4 mt-8 text-lg text-zinc-500">Administrador</h1>
-        <ul className="mt-4">
-          <li
-            className={`flex items-center px-6 py-3 text-lg transition cursor-pointer rounded-xl hover:scale-105 ${
-              activeSection === "Usuarios"
-                ? "bg-gray-200 hover:bg-gray-300"
-                : "hover:text-yellow-500"
-            }`}
-            onClick={() => handleSectionClick("Usuarios")}
-          >
-            <span className="mr-2">
-              <IconUsersGroup />
-            </span>
-            Usuarios
-          </li>
-        </ul>
+          <h1 className="m-4 mt-8 text-lg text-zinc-500">Administrador</h1>
+          <ul className="mt-4">
+            {sections.slice(2).map((section) => (
+              <li
+                key={section.name}
+                className={`flex items-center px-6 py-3 text-xl transition cursor-pointer rounded-xl hover:scale-105 ${
+                  activeSection === section.name
+                    ? "bg-primary text-white hover:bg-yellow-500"
+                    : "hover:text-yellow-500"
+                }`}
+                onClick={() => handleSectionClick(section.name as any)}
+              >
+                <span className="mr-2">{section.icon}</span>
+                {section.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="flex flex-col items-center justify-center mt-auto mb-4">
+          <button className="flex gap-2 mb-10 -ml-16 text-destructive"><span><IconLogout2 /></span>Cerrar Sesión</button>
+          <img src={sits} alt="SITS Logo" className="h-36" />
+        </div>
       </div>
 
       {/* Overlay para resoluciones pequeñas */}

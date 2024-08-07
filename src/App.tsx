@@ -3,7 +3,6 @@ import Landing from './pages/Landing';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Overview from './pages/Overview';
-import Data from './pages/Beneficiario';
 import UserDetails from './pages/Beneficiario';
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/overview" element={<Overview />} />
-        <Route path="/user-details" element={<UserDetails />} />
+        <Route path="/user-details/:userId" element={<UserDetails />} />
       </Routes>
     </Router>
   );
