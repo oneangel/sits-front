@@ -61,6 +61,26 @@ const Resumen = () => {
 
     fetchBeneficios();
   }, []);
+  const user= {
+    name:"Hector"
+  }
+
+  const enviarCorreo = async (tituloBeneficio, nombreUsuario) => {
+    const fechaEnvio = new Date().toLocaleDateString();
+    const correoData = {
+      titulo: tituloBeneficio,
+      agremiado: nombreUsuario,
+      fecha: fechaEnvio,
+    };
+  
+    try {
+      await axios.post("http://localhost:4000/enviar-correo", correoData);
+      console.log("Correo enviado exitosamente");
+    } catch (error) {
+      console.error("Error al enviar el correo:", error);
+    }
+  };
+  
 
   const handleEliminarBeneficio = async (id) => {
     try {
@@ -284,6 +304,50 @@ const Resumen = () => {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="primary">Solicitar</Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Solicitud de Beneficio</DialogTitle>
+                    <DialogDescription>
+                      Beneficio Solicitado: {beneficio.titulo}
+                    </DialogDescription>
+                    <DialogDescription>Beneficiario: Hector</DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button type="button">Solicitar</Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Confirmación de Solicitud
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            Su información y su solicitud será enviada a las
+                            oficinas de SITS donde nos estaremos comunicando con
+                            usted lo más pronto posible.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              // Lógica para enviar el correo
+                              enviarCorreo(beneficio.titulo);
+                            }}
+                          >
+                            Aceptar
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
             </CardFooter>
           </Card>
         ))}

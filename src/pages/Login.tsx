@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import loginImage from "@/assets/images/login1.png";
@@ -6,10 +8,33 @@ import { Link } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
+  const [CURP, setCURP] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleLogin = () => {
-    navigate('/overview');
+  const handleLogin = async () => {
+    console.log(CURP, password)
+    try {
+      const response = await axios.post('http://localhost:4000/api/login', { CURP, password });
+      console.log(CURP, password)
+      // Espera que el backend devuelva datos necesarios para la sesión
+      const userData = response.data; 
+      console.log(CURP, password)
+      
+      // Aquí, en lugar de manejar el token, podrías procesar o almacenar userData de alguna otra manera
+
+      navigate('/overview');
+    } catch (error) {
+      console.error('Error en la solicitud de inicio de sesión:', error);
+      if (error.response && error.response.status === 401) {
+        setError('Credenciales inválidas');
+      } else {
+        setError('Error en el servidor');
+      }
+    }
   };
+  
+
   return (
     <>
       <div className="grid h-screen xl:grid-cols-2">
@@ -18,8 +43,20 @@ function Login() {
           <p className="text-lg text-[#313131] mt-4 mb-9 ">
             Ingresa tus datos de inicio de sesion para acceder a tu cuenta
           </p>
-          <Input type="text" placeholder="CURP" />
-          <Input type="password" placeholder="Contraseña" className="mt-4" />
+          <Input
+            type="text"
+            placeholder="CURP"
+            value={CURP}
+            onChange={(e) => setCURP(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Contraseña"
+            className="mt-4"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          {error && <p className="text-red-500 mt-2">{error}</p>}
           <Link to="/forgotpasword" className="mt-6 mb-10 text-base">
             ¿Olvidaste tu contraseña?
           </Link>
