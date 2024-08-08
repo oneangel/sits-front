@@ -41,7 +41,7 @@ import {
 
 import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
-import { CommandDash } from "@/components/dashboard/ComandDash";
+import { IconPlus } from "@tabler/icons-react";
 
 const Resumen = () => {
   const [parent] = useAutoAnimate();
@@ -61,9 +61,9 @@ const Resumen = () => {
 
     fetchBeneficios();
   }, []);
-  const user= {
-    name:"Hector"
-  }
+  const user = {
+    name: "Hector",
+  };
 
   const enviarCorreo = async (tituloBeneficio, nombreUsuario) => {
     const fechaEnvio = new Date().toLocaleDateString();
@@ -72,7 +72,7 @@ const Resumen = () => {
       agremiado: nombreUsuario,
       fecha: fechaEnvio,
     };
-  
+
     try {
       await axios.post("https://sits.onrender.com/enviar-correo", correoData);
       console.log("Correo enviado exitosamente");
@@ -80,7 +80,6 @@ const Resumen = () => {
       console.error("Error al enviar el correo:", error);
     }
   };
-  
 
   const handleEliminarBeneficio = async (id) => {
     try {
@@ -146,13 +145,15 @@ const Resumen = () => {
 
   return (
     <div>
-      <h1 className="mb-4 text-2xl font-bold">
-        Resumen de Beneficios Recientes
-      </h1>
-
       <Dialog>
         <DialogTrigger asChild>
-          <Button>Agregar beneficio</Button>
+          <button className="flex items-center gap-2 p-4 px-10 mt-8 text-left transition bg-slate-100 rounded-2xl hover:scale-105 hover:bg-slate-200">
+            <IconPlus className="-ml-4 size-8" />
+            <div>
+              <h3 className="text-lg font-semibold">Agregar beneficio</h3>
+              <p className="text-sm text-gray-700">Añadir cualquier beneficio</p>
+            </div>
+          </button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>

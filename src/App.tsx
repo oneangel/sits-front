@@ -4,6 +4,9 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import Overview from './pages/Overview';
 import UserDetails from './pages/Beneficiario';
+import Resumen from './pages/Resume';
+import Categorias from './pages/Categorias';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -12,7 +15,12 @@ function App() {
         <Route path="/" element={<Landing />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/overview" element={<Overview />} />
+        <Route path="/overview" element={<Overview />}>
+          {/* Ruta por defecto dentro de Overview */}
+          <Route index element={<Resumen />} />
+          <Route path="categorias" element={<Categorias />} />
+          <Route path="usuarios" element={<Admin />} />
+        </Route>
         <Route path="/user-details/:userId" element={<UserDetails />} />
       </Routes>
     </Router>

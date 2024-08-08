@@ -39,11 +39,15 @@ const Register = () => {
       form.append(key, files[key]);
     }
     try {
-      const res = await axios.post("https://sits.onrender.com/api/register", form, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await axios.post(
+        "https://sits.onrender.com/api/register",
+        form,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       alert("User registered successfully");
     } catch (error) {
       console.error("Error registering user:", error);
@@ -52,13 +56,13 @@ const Register = () => {
   };
 
   return (
-    <div className="grid h-screen grid-cols-5">
-      <div className="col-span-2 my-auto mx-36">
+    <div className="h-screen grid-cols-5 2xl:grid">
+      <div className="hidden col-span-2 my-auto mx-36 2xl:block">
         <div className="bg-gradient-to-br from-yellow-400 to-amber-500 h-[800px] w-[500px] rounded-[48px] flex items-center justify-center">
           <img src={registerImage} alt="" className="" />
         </div>
       </div>
-      <div className="flex flex-col col-span-3 mx-56 my-auto -ml-10">
+      <div className="flex flex-col col-span-3 my-auto bg-white mx-14 lg:mx-56 2xl:-ml-10">
         <h2 className="text-4xl font-semibold">Registrarse</h2>
         <p className="text-lg text-[#313131] mt-4 mb-9 ">
           Vamos a prepararte para que puedas acceder a tu cuenta personal.
@@ -76,17 +80,6 @@ const Register = () => {
                 required
               />
               <Input
-                type="text"
-                id="CURP"
-                name="CURP"
-                placeholder="CURP"
-                value={formData.CURP}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="flex flex-col col-span-1 gap-8">
-              <Input
                 type="password"
                 id="password"
                 name="password"
@@ -95,15 +88,27 @@ const Register = () => {
                 onChange={handleChange}
                 required
               />
+            </div>
+            <div className="flex flex-col col-span-1 gap-8">
               <Input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirmar Contraseña"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
+                type="text"
+                id="CURP"
+                name="CURP"
+                placeholder="CURP"
+                value={formData.CURP}
+                onChange={handleChange}
+                required
+              />
+
+              <Input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirmar Contraseña"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
           <div>
@@ -147,8 +152,21 @@ const Register = () => {
               onChange={handleFileChange}
             />
           </div>
+          <div>
+            <label htmlFor="comprobanteIngrsos">
+              Comprobante de Ingresos
+            </label>
+            <Input
+              type="file"
+              id="comprobanteIngrsos"
+              name="comprobanteIngrsos"
+              onChange={handleFileChange}
+            />
+          </div>
 
-          <Button type="submit" className="w-full">Registrarse</Button>
+          <Button type="submit" className="w-full">
+            Registrarse
+          </Button>
         </form>
       </div>
     </div>
