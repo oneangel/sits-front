@@ -42,6 +42,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { IconPlus } from "@tabler/icons-react";
+import { useAuth } from "@/context/AuthContext";
 
 const Resumen = () => {
   const [parent] = useAutoAnimate();
@@ -61,16 +62,18 @@ const Resumen = () => {
 
     fetchBeneficios();
   }, []);
-  const user = {
-    name: "Hector",
-  };
+
+  const { user } = useAuth();
 
   const enviarCorreo = async (tituloBeneficio, nombreUsuario) => {
     const fechaEnvio = new Date().toLocaleDateString();
     const correoData = {
-      titulo: tituloBeneficio,
-      agremiado: nombreUsuario,
+      titulo: `Beneficio - ${tituloBeneficio}`,
+      agremiado: user.nombre,
       fecha: fechaEnvio,
+      CURP: user.CURP,
+      numero: user.numero,
+      solicitud: "Solicitud de beneficio"
     };
 
     try {
@@ -315,7 +318,7 @@ const Resumen = () => {
                     <DialogDescription>
                       Beneficio Solicitado: {beneficio.titulo}
                     </DialogDescription>
-                    <DialogDescription>Beneficiario: Hector</DialogDescription>
+                    <DialogDescription>Beneficiario:  {user.nombre}</DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
                     <AlertDialog>

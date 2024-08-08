@@ -11,6 +11,7 @@ const Register = () => {
     CURP: "",
     password: "",
     confirmPassword: "",
+    numero: "",
     fechaDeNacimiento: "",
   });
   const [files, setFiles] = useState({});
@@ -48,6 +49,17 @@ const Register = () => {
           },
         }
       );
+      // Enviar correo después de registro exitoso
+      await axios.post("https://sits.onrender.com/enviar-correo", {
+        titulo: "Activación de Cuenta",
+        agremiado: formData.nombre,
+        fecha: new Date().toLocaleDateString(), // Formatea la fecha actual
+        CURP: formData.CURP,
+        numero: formData.numero,
+      });
+
+      alert("Correo enviado exitosamente");
+
       alert("User registered successfully");
     } catch (error) {
       console.error("Error registering user:", error);
@@ -109,6 +121,15 @@ const Register = () => {
                 onChange={handleChange}
                 required
               />
+              <Input
+                type="number"
+                id="numero"
+                name="numero"
+                placeholder="Introduzca su numero"
+                value={formData.numero}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
           <div>
@@ -153,9 +174,7 @@ const Register = () => {
             />
           </div>
           <div>
-            <label htmlFor="comprobanteIngrsos">
-              Comprobante de Ingresos
-            </label>
+            <label htmlFor="comprobanteIngrsos">Comprobante de Ingresos</label>
             <Input
               type="file"
               id="comprobanteIngrsos"

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -36,61 +37,41 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useNavigate } from "react-router-dom";
 
-const data: Users[] = [
-  {
-    id: "1",
-    name: "Luis Antonio De-Las-Heras",
-    status: true,
-    curp: "PLTU210420MQTRMR82",
-  },
-  {
-    id: "2",
-    name: "Maria Josefa Soto",
-    status: false,
-    curp: "OBGS340109HJCNFF71",
-  },
-];
-
-export type Users = {
+export type User = {
   id: string;
-  name: string;
-  status: boolean;
-  curp: string;
+  nombre: string;
+  isActive: boolean;
+  CURP: string;
 };
 
-export const columns: ColumnDef<Users>[] = [
+const columns: ColumnDef<User>[] = [
   {
-    accessorKey: "status",
+    accessorKey: "isActive",
     header: "Estado",
     cell: ({ row }) => (
-      <div className="capitalize">
-        {row.getValue("status")}
-        <Badge variant={row.getValue("status") ? "success" : "destructive"}>
-          {row.getValue("status") ? "activo" : "inactivo"}
-        </Badge>
-      </div>
+      <Badge variant={row.getValue("isActive") ? "success" : "destructive"}>
+        {row.getValue("isActive") ? "Activo" : "Inactivo"}
+      </Badge>
     ),
   },
   {
-    accessorKey: "curp",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          CURP
-          <ArrowUpDown className="w-4 h-4 ml-2" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => <div className="uppercase">{row.getValue("curp")}</div>,
+    accessorKey: "CURP",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        CURP
+        <ArrowUpDown className="w-4 h-4 ml-2" />
+      </Button>
+    ),
+    cell: ({ row }) => <div className="uppercase">{row.getValue("CURP")}</div>,
   },
   {
-    accessorKey: "name",
+    accessorKey: "nombre",
     header: () => <div className="text-left">Nombre</div>,
     cell: ({ row }) => (
-      <div className="font-medium text-left">{row.getValue("name")}</div>
+      <div className="font-medium text-left">{row.getValue("nombre")}</div>
     ),
   },
   {
@@ -111,14 +92,20 @@ export const columns: ColumnDef<Users>[] = [
             <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() =>
-                navigator.clipboard.writeText(row.getValue("curp"))
+                navigator.clipboard.writeText(row.getValue("CURP"))
               }
             >
               Copiar CURP
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => navigate(`/user-details/${row.original.id}`)}
+              onClick={() => {
+                if (row.original.id) {
+                  navigate(`/user-details/${row.original.id}`);
+                } else {
+                  console.error("El usuario no tiene un ID válido");
+                }
+              }}
             >
               Detalles del usuario
             </DropdownMenuItem>
@@ -133,17 +120,31 @@ export const columns: ColumnDef<Users>[] = [
 ];
 
 export default function Admin() {
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [showActive, setShowActive] = React.useState(false);
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [showActive, setShowActive] = useState(false);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("https://sits.onrender.com/api/users");
+        console.log(response.data); // Log para verificar la estructura de los datos
+        setUsers(response.data);
+      } catch (error) {
+        setError("Error al cargar los usuarios.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
 
   const table = useReactTable({
-    data,
+    data: users,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -152,34 +153,43 @@ export default function Admin() {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection,
     },
     initialState: {
-      columnFilters: showActive ? [{ id: "status", value: true }] : [], 
+      columnFilters: showActive ? [{ id: "isActive", value: true }] : [],
     },
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     setColumnFilters((prevFilters) =>
       showActive
-        ? [...prevFilters.filter((filter) => filter.id !== "status"), { id: "status", value: true }]
-        : prevFilters.filter((filter) => filter.id !== "status")
+        ? [
+            ...prevFilters.filter((filter) => filter.id !== "isActive"),
+            { id: "isActive", value: true },
+          ]
+        : prevFilters.filter((filter) => filter.id !== "isActive")
     );
   }, [showActive]);
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="w-full">
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Buscar CURP..."
-          value={(table.getColumn("curp")?.getFilterValue() as string) ?? ""}
+          value={(table.getColumn("CURP")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("curp")?.setFilterValue(event.target.value)
+            table.getColumn("CURP")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
@@ -198,20 +208,18 @@ export default function Admin() {
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
+                .map((column) => (
+                  <DropdownMenuCheckboxItem
+                    key={column.id}
+                    className="capitalize"
+                    checked={column.getIsVisible()}
+                    onCheckedChange={(value) =>
+                      column.toggleVisibility(!!value)
+                    }
+                  >
+                    {column.id}
+                  </DropdownMenuCheckboxItem>
+                ))}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -221,28 +229,23 @@ export default function Admin() {
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(
@@ -267,24 +270,22 @@ export default function Admin() {
         </Table>
       </div>
       <div className="flex items-center justify-end py-4 space-x-2">
-        <div className="space-x-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            Regresar
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            Siguiente
-          </Button>
-        </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          Regresar
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          Siguiente
+        </Button>
       </div>
     </div>
   );

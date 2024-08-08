@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input";
 import loginImage from "@/assets/images/login1.png";
 import sits from "@/assets/images/sitshd.png";
 import { IconArrowLeft } from "@tabler/icons-react";
+import { useAuth } from "@/context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
   const [CURP, setCURP] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     try {
@@ -19,7 +21,18 @@ function Login() {
         CURP,
         password,
       });
-      const userData = response.data;
+  
+      console.log('Respuesta del servidor:', response.data);
+  
+      const { nombre, status, CURP: curpFromResponse, numero } = response.data;
+      console.log(`nombre ${nombre}`);
+      console.log(`curp ${curpFromResponse}`);
+      console.log(`status ${status}`);
+      console.log(`numero ${numero}`);
+  
+      // Almacenar los datos en el contexto de autenticación
+      login({ nombre, CURP: curpFromResponse, status, numero });
+  
       navigate("/overview");
     } catch (error) {
       console.error("Error en la solicitud de inicio de sesión:", error);
@@ -30,6 +43,8 @@ function Login() {
       }
     }
   };
+  
+  
 
   return (
     <div className="flex flex-col h-screen">
