@@ -132,8 +132,11 @@ export default function Admin() {
     const fetchUsers = async () => {
       try {
         const response = await axios.get("https://sits.onrender.com/api/users");
-        console.log(response.data); // Log para verificar la estructura de los datos
-        setUsers(response.data);
+        const usersData = response.data.map((user) => ({
+          ...user,
+          id: user._id, // Asignar _id a id
+        }));
+        setUsers(usersData);
       } catch (error) {
         setError("Error al cargar los usuarios.");
       } finally {
@@ -142,6 +145,7 @@ export default function Admin() {
     };
     fetchUsers();
   }, []);
+  
 
   const table = useReactTable({
     data: users,

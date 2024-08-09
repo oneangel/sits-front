@@ -1,44 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import UserCard from "../components/Beneficiarios/cards";
 import Sidebar from "@/components/landing/Sidebar";
 
-const userData = {
-  "1": {
-    nombre: "Luis Antonio De-Las-Heras",
-    CURP: "PLTU210420MQTRMR82",
-    fechaDeNacimiento: "1989-01-23",
-    INE: "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    actaNacimiento:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    comprobanteDomicilio:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    comprobanteIngresos:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-  },
-  "2": {
-    nombre: "Maria Josefa Soto",
-    CURP: "OBGS340109HJCNFF71",
-    fechaDeNacimiento: "1990-05-17",
-    INE: "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    actaNacimiento:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    comprobanteDomicilio:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-    comprobanteIngresos:
-      "https://sits-durango.s3.us-east-2.amazonaws.com/aver4/prueba3.pdf",
-  },
-};
-
 const UserDetails: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
-  const user = userData[userId ?? "1"];
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get(`https://sits.onrender.com/api/users/${userId}`);
+        setUser(response.data);
+      } catch (error) {
+        setError("Usuario no encontrado.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (userId) {
+      fetchUser();
+    } else {
+      setError("ID de usuario no proporcionado.");
+      setIsLoading(false);
+    }
+  }, [userId]);
+
+  if (isLoading) {
+    return <div>Cargando...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <>
       <nav>Regresar</nav>
       <div className="flex-1">
-        <UserCard {...user} />
+        {user && <UserCard {...user} />}
       </div>
     </>
   );

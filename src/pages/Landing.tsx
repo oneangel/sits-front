@@ -4,10 +4,12 @@ import shield from "@/assets/images/shield.png";
 import deposit from "@/assets/images/deposit.png";
 import money from "@/assets/images/money.png";
 import teamsits from "@/assets/images/teamsits.png";
+import dashboard from "@/assets/images/dashboard.png";
 import l2 from "@/assets/images/l2.png";
 import sits from "@/assets/images/sits.png";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/landing/Card";
+import { ContainerScroll } from "../components/ui/container-scroll-animation.tsx";
 
 function Landing() {
   return (
@@ -103,7 +105,36 @@ function Landing() {
         </div>
       </div>
 
-      {/* Section 4 */}
+{/* Section 4 */}
+<div className="flex flex-col overflow-hidden">
+  <ContainerScroll
+    titleComponent={
+      <>
+        <h1 className="text-4xl font-semibold text-black dark:text-white">
+        Impulsa tu futuro <br />
+          <span className="text-4xl md:text-[5rem] font-bold mt-1 leading-none">
+          Únete a nuestro sindicato 
+          </span>
+        </h1>
+      </>
+    }
+  >
+    <img
+      src={dashboard}
+      alt="hero"
+      style={{
+        maxWidth: '100%', // Para mantener reactividad
+        borderRadius: '16px', // Estilo redondeo
+        objectFit: 'cover', // Recorta la imagen para llenar el contenedor
+        width: '1400',
+        height: '720', // Mantiene la proporción
+      }}
+      draggable={false}
+    />
+  </ContainerScroll>
+</div>
+
+      {/* Section 5 */}
       <div className="max-w-screen-xl bg-gradient-to-br from-yellow-400 to-amber-500 py-20 mx-auto rounded-[48px] mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="col-span-1 mx-4 my-auto text-white md:col-span-2 md:mx-20">
           <h2 className="text-3xl font-bold md:text-5xl">
@@ -129,7 +160,9 @@ function Landing() {
       <div className="w-full bg-[#0F0E17] py-20 mt-20 grid md:grid-cols-4 px-20">
         <div className="flex justify-between col-span-1 md:flex-col md:h-72">
           <img src={sits} alt="" className="size-20" />
-          <p className="mt-4 text-white md:mt-0">© SITS todos los derechos reservados</p>
+          <p className="mt-4 text-white md:mt-0">
+            © SITS todos los derechos reservados
+          </p>
         </div>
         <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
           <h3 className="text-lg font-semibold text-white">Plataforma</h3>
