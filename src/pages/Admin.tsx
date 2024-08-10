@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {
   ColumnDef,
@@ -44,43 +44,86 @@ export type User = {
   CURP: string;
 };
 
-const columns: ColumnDef<User>[] = [
-  {
-    accessorKey: "isActive",
-    header: "Estado",
-    cell: ({ row }) => (
-      <Badge variant={row.getValue("isActive") ? "success" : "destructive"}>
-        {row.getValue("isActive") ? "Activo" : "Inactivo"}
-      </Badge>
-    ),
-  },
-  {
-    accessorKey: "CURP",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        CURP
-        <ArrowUpDown className="w-4 h-4 ml-2" />
-      </Button>
-    ),
-    cell: ({ row }) => <div className="uppercase">{row.getValue("CURP")}</div>,
-  },
-  {
-    accessorKey: "nombre",
-    header: () => <div className="text-left">Nombre</div>,
-    cell: ({ row }) => (
-      <div className="font-medium text-left">{row.getValue("nombre")}</div>
-    ),
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const navigate = useNavigate();
+export default function Admin() {
+  const [users, setUsers] = useState<User[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sorting, setSorting] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [showActive, setShowActive] = useState(false);
+  const navigate = useNavigate();
 
-      return (
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get("https://sits.onrender.com/api/users");
+        const usersData = response.data.map((user) => ({
+          ...user,
+          id: user._id, // Asignar _id a id
+        }));
+        setUsers(usersData);
+      } catch (error) {
+        setError("Error al cargar los usuarios.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchUsers();
+  }, []);
+
+  const toggleStatus = useCallback(async (userId: string) => {
+    try {
+      await axios.put(
+        `https://sits.onrender.com/api/users/${userId}/toggle-status`
+      );
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === userId ? { ...user, isActive: !user.isActive } : user
+        )
+      );
+    } catch (error) {
+      console.error("Error al cambiar el estado del usuario:", error);
+    }
+  }, []);
+
+  const columns: ColumnDef<User>[] = [
+    {
+      accessorKey: "isActive",
+      header: "Estado",
+      cell: ({ row }) => (
+        <Badge variant={row.getValue("isActive") ? "success" : "destructive"}>
+          {row.getValue("isActive") ? "Activo" : "Inactivo"}
+        </Badge>
+      ),
+    },
+    {
+      accessorKey: "CURP",
+      header: ({ column }) => (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          CURP
+          <ArrowUpDown className="w-4 h-4 ml-2" />
+        </Button>
+      ),
+      cell: ({ row }) => (
+        <div className="uppercase">{row.getValue("CURP")}</div>
+      ),
+    },
+    {
+      accessorKey: "nombre",
+      header: () => <div className="text-left">Nombre</div>,
+      cell: ({ row }) => (
+        <div className="font-medium text-left">{row.getValue("nombre")}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="w-8 h-8 p-0">
@@ -109,43 +152,17 @@ const columns: ColumnDef<User>[] = [
             >
               Detalles del usuario
             </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => toggleStatus(row.original.id)}>
+              {row.original.isActive ? "Desactivar" : "Activar"}
+            </DropdownMenuItem>
             <DropdownMenuItem className="text-destructive">
               Eliminar
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
-      );
+      ),
     },
-  },
-];
-
-export default function Admin() {
-  const [users, setUsers] = useState<User[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [showActive, setShowActive] = useState(false);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("https://sits.onrender.com/api/users");
-        const usersData = response.data.map((user) => ({
-          ...user,
-          id: user._id, // Asignar _id a id
-        }));
-        setUsers(usersData);
-      } catch (error) {
-        setError("Error al cargar los usuarios.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchUsers();
-  }, []);
-  
+  ];
 
   const table = useReactTable({
     data: users,

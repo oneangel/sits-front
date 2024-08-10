@@ -1,7 +1,43 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@/context/AuthContext";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "@radix-ui/react-label";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const Categorias = () => {
+  const [parent] = useAutoAnimate();
+  const [beneficiosRecientes, setBeneficiosRecientes] = useState([]);
+  const { user } = useAuth();
   const [beneficios, setBeneficios] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -9,26 +45,79 @@ const Categorias = () => {
 
   const categorias = ["Apoyo", "Programas", "Otros"];
 
+  const [tituloEditado, setTituloEditado] = useState("");
+  const [descripcionEditada, setDescripcionEditada] = useState("");
+  const [idEditando, setIdEditando] = useState(null);
+
   const handleCategoryChange = (event) => {
-    const newCategory = event.target.value;
-    console.log("Cambiando categoría a:", newCategory);
-    setSelectedCategory(newCategory);
+    setSelectedCategory(event.target.value);
+  };
+
+  const enviarCorreo = async (tituloBeneficio) => {
+    const fechaEnvio = new Date().toLocaleDateString();
+    const correoData = {
+      titulo: `Beneficio - ${tituloBeneficio}`,
+      agremiado: user.nombre,
+      fecha: fechaEnvio,
+      CURP: user.CURP,
+      numero: user.numero,
+      solicitud: "Solicitud de beneficio",
+    };
+
+    try {
+      await axios.post("https://sits.onrender.com/enviar-correo", correoData);
+      console.log("Correo enviado exitosamente");
+    } catch (error) {
+      console.error("Error al enviar el correo:", error);
+    }
+  };
+
+  const handleEliminarBeneficio = async (id) => {
+    try {
+      await axios.delete(`https://sits.onrender.com/api/beneficios/${id}`);
+      setBeneficios(beneficios.filter((beneficio) => beneficio._id !== id));
+    } catch (error) {
+      console.error("Error al eliminar beneficio:", error);
+    }
+  };
+
+  const handleEditarBeneficio = (beneficio) => {
+    setTituloEditado(beneficio.titulo);
+    setDescripcionEditada(beneficio.descripcion);
+    setIdEditando(beneficio._id);
+  };
+
+  const handleGuardarCambios = async () => {
+    try {
+      const beneficioActualizado = {
+        titulo: tituloEditado,
+        descripcion: descripcionEditada,
+      };
+      const response = await axios.put(
+        `https://sits.onrender.com/api/beneficios/${idEditando}`,
+        beneficioActualizado
+      );
+      setBeneficios(
+        beneficios.map((beneficio) =>
+          beneficio._id === idEditando ? response.data : beneficio
+        )
+      );
+    } catch (error) {
+      console.error("Error al actualizar beneficio:", error);
+    }
   };
 
   useEffect(() => {
     const fetchBeneficios = async () => {
       try {
         setLoading(true);
-        setError(null); // Limpia cualquier error previo
-        setBeneficios([]); // Limpia beneficios previos
+        setError(null);
+        setBeneficios([]);
         const url = `https://sits.onrender.com/api/beneficios/categoria/${selectedCategory}`;
-        console.log("URL solicitada:", url);
         const response = await axios.get(url);
-        console.log("Datos recibidos:", response.data);
         setBeneficios(response.data);
       } catch (err) {
         setError(err.message);
-        console.error("Error al obtener beneficios:", err);
       } finally {
         setLoading(false);
       }
@@ -56,9 +145,143 @@ const Categorias = () => {
       ) : error ? (
         <div>Error al cargar: {error}</div>
       ) : (
-        <ul>
+        <ul ref={parent} className="grid grid-cols-1 gap-4">
           {beneficios.map((beneficio) => (
-            <li key={beneficio._id}>{beneficio.titulo}</li>
+            <Card key={beneficio._id} className="border rounded-md">
+              <CardHeader>
+                <CardTitle>{beneficio.titulo}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p>{beneficio.descripcion}</p>
+              </CardContent>
+              <CardFooter className="flex justify-between">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="default"
+                      onClick={() => handleEditarBeneficio(beneficio)}
+                    >
+                      Editar
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Editar Beneficio</DialogTitle>
+                      <DialogDescription>
+                        Edita el beneficio aquí. Haga clic en Guardar cuando
+                        haya terminado.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid items-center grid-cols-4 gap-4">
+                        <Label htmlFor="titulo-editado" className="text-right">
+                          Titulo
+                        </Label>
+                        <Input
+                          id="titulo-editado"
+                          value={tituloEditado}
+                          onChange={(e) => setTituloEditado(e.target.value)}
+                          className="col-span-3"
+                        />
+                      </div>
+                      <div className="grid items-center grid-cols-4 gap-4">
+                        <Label
+                          htmlFor="descripcion-editada"
+                          className="text-right"
+                        >
+                          Descripcion
+                        </Label>
+                        <Input
+                          id="descripcion-editada"
+                          value={descripcionEditada}
+                          onChange={(e) =>
+                            setDescripcionEditada(e.target.value)
+                          }
+                          className="col-span-3"
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <DialogClose asChild>
+                        <Button type="submit" onClick={handleGuardarCambios}>
+                          Guardar
+                        </Button>
+                      </DialogClose>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Eliminar</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        ¿Está seguro de eliminar este beneficio?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Este beneficio no se eliminará permanentemente, podrá
+                        recuperarlo en la sección de Administrador.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="text-white bg-red-500 hover:bg-red-400"
+                        onClick={() => handleEliminarBeneficio(beneficio._id)}
+                      >
+                        Eliminar
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="primary">Solicitar</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Solicitud de Beneficio</DialogTitle>
+                      <DialogDescription>
+                        Beneficio Solicitado: {beneficio.titulo}
+                      </DialogDescription>
+                      <DialogDescription>
+                        Beneficiario: {user.nombre}
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button type="button">Solicitar</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Confirmación de Solicitud
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Su información y su solicitud será enviada a las
+                              oficinas de SITS donde nos estaremos comunicando
+                              con usted lo más pronto posible.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => {
+                                enviarCorreo(beneficio.titulo);
+                              }}
+                            >
+                              Aceptar
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
+              </CardFooter>
+            </Card>
           ))}
         </ul>
       )}
