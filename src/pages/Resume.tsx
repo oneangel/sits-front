@@ -150,75 +150,83 @@ const Resumen = () => {
   };
 
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <button className="flex items-center gap-2 p-4 px-10 mt-8 text-left transition bg-slate-100 rounded-2xl hover:scale-105 hover:bg-slate-200">
-            <IconPlus className="-ml-4 size-8" />
-            <div>
-              <h3 className="text-lg font-semibold">Agregar beneficio</h3>
-              <p className="text-sm text-gray-700">
-                Añadir cualquier beneficio
-              </p>
+    <div className="">
+      {user.status !== "commun" && (
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="flex items-center gap-2 p-4 px-10 mt-8 text-left transition bg-slate-100 rounded-2xl hover:scale-105 hover:bg-slate-200">
+              <IconPlus className="-ml-4 size-8" />
+              <div>
+                <h3 className="text-lg font-semibold">Agregar beneficio</h3>
+                <p className="text-sm text-gray-700">
+                  Añadir cualquier beneficio
+                </p>
+              </div>
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Agregar Beneficio</DialogTitle>
+              <DialogDescription>
+                Añade el beneficio aquí. Haga clic en Guardar cuando haya
+                terminado.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="title-nuevo" className="text-right">
+                  Titulo
+                </Label>
+                <Input
+                  id="title-nuevo"
+                  value={tituloNuevo}
+                  onChange={(e) => setTituloNuevo(e.target.value)}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="description-nueva" className="text-right">
+                  Descripcion
+                </Label>
+                <Input
+                  id="description-nueva"
+                  value={descripcionNueva}
+                  onChange={(e) => setDescripcionNueva(e.target.value)}
+                  className="col-span-3"
+                />
+              </div>
+              <div className="grid items-center grid-cols-4 gap-4">
+                <Label htmlFor="categoria text-right">Categoria</Label>
+                <Select
+                  value={categoriaNueva}
+                  onValueChange={setCategoriaNueva}
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Categoria" />
+                  </SelectTrigger>
+                  <SelectContent className="w-full">
+                    <SelectItem value="Apoyo">Apoyo</SelectItem>
+                    <SelectItem value="Programas">Programa</SelectItem>
+                    <SelectItem value="Otros">Otros</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-          </button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Agregar Beneficio</DialogTitle>
-            <DialogDescription>
-              Añade el beneficio aquí. Haga clic en Guardar cuando haya
-              terminado.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid items-center grid-cols-4 gap-4">
-              <Label htmlFor="title-nuevo" className="text-right">
-                Titulo
-              </Label>
-              <Input
-                id="title-nuevo"
-                value={tituloNuevo}
-                onChange={(e) => setTituloNuevo(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid items-center grid-cols-4 gap-4">
-              <Label htmlFor="description-nueva" className="text-right">
-                Descripcion
-              </Label>
-              <Input
-                id="description-nueva"
-                value={descripcionNueva}
-                onChange={(e) => setDescripcionNueva(e.target.value)}
-                className="col-span-3"
-              />
-            </div>
-            <div className="grid items-center grid-cols-4 gap-4">
-              <Label htmlFor="categoria text-right">Categoria</Label>
-              <Select value={categoriaNueva} onValueChange={setCategoriaNueva}>
-                <SelectTrigger className="col-span-3">
-                  <SelectValue placeholder="Categoria" />
-                </SelectTrigger>
-                <SelectContent className="w-full">
-                  <SelectItem value="Apoyo">Apoyo</SelectItem>
-                  <SelectItem value="Programas">Programa</SelectItem>
-                  <SelectItem value="Otros">Otros</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button type="submit" onClick={handleAgregarBeneficio}>
-                Agregar
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <DialogClose asChild>
+                <Button type="submit" onClick={handleAgregarBeneficio}>
+                  Agregar
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )}
 
-      <ul className="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3" ref={parent}>
+      <ul
+        className="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3 max-h-[700px] overflow-auto"
+        ref={parent}
+      >
         {beneficiosRecientes.map((beneficio) => (
           <Card className="col-span-1" key={beneficio._id}>
             <CardHeader>
@@ -314,7 +322,7 @@ const Resumen = () => {
               )}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="primary">Solicitar</Button>
+                  <Button>Solicitar</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
