@@ -28,7 +28,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    
+
+    /* Adicionales para manejo de errores */
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"]
 }

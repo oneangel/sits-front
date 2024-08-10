@@ -73,7 +73,7 @@ const Resumen = () => {
       fecha: fechaEnvio,
       CURP: user.CURP,
       numero: user.numero,
-      solicitud: "Solicitud de beneficio"
+      solicitud: "Solicitud de beneficio",
     };
 
     try {
@@ -97,20 +97,23 @@ const Resumen = () => {
 
   const [tituloNuevo, setTituloNuevo] = useState("");
   const [descripcionNueva, setDescripcionNueva] = useState("");
+  const [categoriaNueva, setCategoriaNueva] = useState("");
 
   const handleAgregarBeneficio = async () => {
     try {
       const nuevoBeneficio = {
         titulo: tituloNuevo,
         descripcion: descripcionNueva,
+        categoria: categoriaNueva, // Añadir la categoría
       };
       const response = await axios.post(
         "https://sits.onrender.com/api/beneficios",
         nuevoBeneficio
-      ); // Asegúrate de que la URL es correcta
+      );
       setBeneficiosRecientes([...beneficiosRecientes, response.data]);
-      setTituloNuevo(""); // Limpiar el campo del título
-      setDescripcionNueva(""); // Limpiar el campo de la descripción
+      setTituloNuevo("");
+      setDescripcionNueva("");
+      setCategoriaNueva(""); // Limpiar la categoría seleccionada
     } catch (error) {
       console.error("Error al agregar beneficio:", error);
     }
@@ -154,7 +157,9 @@ const Resumen = () => {
             <IconPlus className="-ml-4 size-8" />
             <div>
               <h3 className="text-lg font-semibold">Agregar beneficio</h3>
-              <p className="text-sm text-gray-700">Añadir cualquier beneficio</p>
+              <p className="text-sm text-gray-700">
+                Añadir cualquier beneficio
+              </p>
             </div>
           </button>
         </DialogTrigger>
@@ -191,21 +196,14 @@ const Resumen = () => {
             </div>
             <div className="grid items-center grid-cols-4 gap-4">
               <Label htmlFor="categoria text-right">Categoria</Label>
-              <Select>
+              <Select value={categoriaNueva} onValueChange={setCategoriaNueva}>
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Categoria" />
                 </SelectTrigger>
                 <SelectContent className="w-full">
-                  <SelectItem value="1">Económico</SelectItem>
-                  <SelectItem value="2">Esquema Jurídico</SelectItem>
-                  <SelectItem value="3">Salud</SelectItem>
-                  <SelectItem value="4">Familiar</SelectItem>
-                  <SelectItem value="5">Seguro de Vida</SelectItem>
-                  <SelectItem value="6">Descuentos</SelectItem>
-                  <SelectItem value="7">Becas Educativas</SelectItem>
-                  <SelectItem value="8">Asesoría de Vivienda</SelectItem>
-                  <SelectItem value="9">Modalidad 40</SelectItem>
-                  <SelectItem value="0">Gastos funerarios</SelectItem>
+                  <SelectItem value="Apoyo">Apoyo</SelectItem>
+                  <SelectItem value="Programas">Programa</SelectItem>
+                  <SelectItem value="Otros">Otros</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -318,7 +316,9 @@ const Resumen = () => {
                     <DialogDescription>
                       Beneficio Solicitado: {beneficio.titulo}
                     </DialogDescription>
-                    <DialogDescription>Beneficiario:  {user.nombre}</DialogDescription>
+                    <DialogDescription>
+                      Beneficiario: {user.nombre}
+                    </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
                     <AlertDialog>
