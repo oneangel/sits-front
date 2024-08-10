@@ -9,13 +9,17 @@ import {
 import sits from "../../assets/images/sitshd.png";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
 
 const Sidebar: React.FC = () => {
   const [isSidebarVisible, setSidebarVisible] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
 
-  const handleSectionClick = (section: "Resumen" | "Categorias" | "Usuarios") => {
+  const handleSectionClick = (
+    section: "Resumen" | "Categorias" | "Usuarios"
+  ) => {
     switch (section) {
       case "Resumen":
         navigate("/overview");
@@ -40,9 +44,18 @@ const Sidebar: React.FC = () => {
 
   const sections = [
     { name: "Resumen", icon: <IconLayoutDashboardFilled />, path: "/overview" },
-    { name: "Categorias", icon: <IconHomeDown />, path: "/overview/categorias" },
+    {
+      name: "Categorias",
+      icon: <IconHomeDown />,
+      path: "/overview/categorias",
+    },
     { name: "Usuarios", icon: <IconUsersGroup />, path: "/overview/usuarios" },
   ];
+
+  // Filtrar las secciones basadas en el estado del usuario
+  const userSections = sections.filter(
+    (section) => !(section.name === "Usuarios" && user.status === "commun")
+  );
 
   return (
     <div className="flex">
@@ -54,7 +67,7 @@ const Sidebar: React.FC = () => {
         <div>
           <h1 className="m-4 text-lg text-zinc-500">Tableros</h1>
           <ul className="mt-4">
-            {sections.slice(0, 2).map((section) => (
+            {userSections.slice(0, 2).map((section) => (
               <li
                 key={section.name}
                 className={`flex items-center px-6 py-3 text-xl transition cursor-pointer rounded-xl hover:scale-105 ${
@@ -70,9 +83,11 @@ const Sidebar: React.FC = () => {
             ))}
           </ul>
 
-          <h1 className="m-4 mt-8 text-lg text-zinc-500">Administrador</h1>
+          {user.status !== "commun" && (
+            <h1 className="m-4 mt-8 text-lg text-zinc-500">Administrador</h1>
+          )}
           <ul className="mt-4">
-            {sections.slice(2).map((section) => (
+            {userSections.slice(2).map((section) => (
               <li
                 key={section.name}
                 className={`flex items-center px-6 py-3 text-xl transition cursor-pointer rounded-xl hover:scale-105 ${
@@ -90,8 +105,14 @@ const Sidebar: React.FC = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center mt-auto mb-4">
-          <button onClick={() => navigate('/')} className="flex gap-2 mb-10 -ml-16 text-destructive">
-            <span><IconLogout2 /></span>Cerrar Sesión
+          <button
+            onClick={() => navigate("/")}
+            className="flex gap-2 mb-10 -ml-16 text-destructive"
+          >
+            <span>
+              <IconLogout2 />
+            </span>
+            Cerrar Sesión
           </button>
           <img src={sits} alt="SITS Logo" className="h-36" />
         </div>

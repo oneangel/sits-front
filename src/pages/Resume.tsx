@@ -229,14 +229,17 @@ const Resumen = () => {
             </CardContent>
             <CardFooter className="gap-2">
               <Dialog>
-                <DialogTrigger asChild>
-                  <Button
-                    variant={"secondary"}
-                    onClick={() => handleEditarBeneficio(beneficio)}
-                  >
-                    Editar
-                  </Button>
-                </DialogTrigger>
+                {user.status !== "commun" && (
+                  <DialogTrigger asChild>
+                    <Button
+                      variant={"secondary"}
+                      onClick={() => handleEditarBeneficio(beneficio)}
+                    >
+                      Editar
+                    </Button>
+                  </DialogTrigger>
+                )}
+
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
                     <DialogTitle>Editar Beneficio</DialogTitle>
@@ -281,31 +284,34 @@ const Resumen = () => {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="destructive">Eliminar</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>
-                      ¿Está seguro de eliminar este beneficio?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Este beneficio no se eliminará permanentemente, podrá
-                      recuperarlo en la sección de Administrador.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="text-white bg-red-500 hover:bg-red-400"
-                      onClick={() => handleEliminarBeneficio(beneficio._id)}
-                    >
-                      Eliminar
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+
+              {user.status !== "commun" && (
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button variant="destructive">Eliminar</Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        ¿Está seguro de eliminar este beneficio?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Este beneficio no se eliminará permanentemente, podrá
+                        recuperarlo en la sección de Administrador.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                      <AlertDialogAction
+                        className="text-white bg-red-500 hover:bg-red-400"
+                        onClick={() => handleEliminarBeneficio(beneficio._id)}
+                      >
+                        Eliminar
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
+              )}
               <Dialog>
                 <DialogTrigger asChild>
                   <Button variant="primary">Solicitar</Button>

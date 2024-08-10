@@ -128,7 +128,9 @@ const Categorias = () => {
 
   return (
     <div>
-      <h1 className="mt-10 mb-4 text-xl font-semibold">Seleccione una categoría de beneficios</h1>
+      <h1 className="mt-10 mb-4 text-xl font-semibold">
+        Seleccione una categoría de beneficios
+      </h1>
       <select
         value={selectedCategory}
         onChange={handleCategoryChange}
@@ -145,96 +147,104 @@ const Categorias = () => {
       ) : error ? (
         <div>Error al cargar: {error}</div>
       ) : (
-        <ul ref={parent} className="grid grid-cols-3 gap-4" >
+        <ul ref={parent} className="grid grid-cols-3 gap-4">
           {beneficios.map((beneficio) => (
             <Card key={beneficio._id} className="col-span-1 border rounded-md">
               <CardHeader>
                 <CardTitle>{beneficio.titulo}</CardTitle>
               </CardHeader>
-              <CardContent className="max-h-[200px] h-[200px]"  >
+              <CardContent className="max-h-[200px] h-[200px]">
                 <p>{beneficio.descripcion}</p>
               </CardContent>
               <CardFooter className="flex justify-between">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="default"
-                      onClick={() => handleEditarBeneficio(beneficio)}
-                    >
-                      Editar
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Editar Beneficio</DialogTitle>
-                      <DialogDescription>
-                        Edita el beneficio aquí. Haga clic en Guardar cuando
-                        haya terminado.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid items-center grid-cols-4 gap-4">
-                        <Label htmlFor="titulo-editado" className="text-right">
-                          Titulo
-                        </Label>
-                        <Input
-                          id="titulo-editado"
-                          value={tituloEditado}
-                          onChange={(e) => setTituloEditado(e.target.value)}
-                          className="col-span-3"
-                        />
-                      </div>
-                      <div className="grid items-center grid-cols-4 gap-4">
-                        <Label
-                          htmlFor="descripcion-editada"
-                          className="text-right"
-                        >
-                          Descripcion
-                        </Label>
-                        <Input
-                          id="descripcion-editada"
-                          value={descripcionEditada}
-                          onChange={(e) =>
-                            setDescripcionEditada(e.target.value)
-                          }
-                          className="col-span-3"
-                        />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <DialogClose asChild>
-                        <Button type="submit" onClick={handleGuardarCambios}>
-                          Guardar
-                        </Button>
-                      </DialogClose>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive">Eliminar</Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>
-                        ¿Está seguro de eliminar este beneficio?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Este beneficio no se eliminará permanentemente, podrá
-                        recuperarlo en la sección de Administrador.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                      <AlertDialogAction
-                        className="text-white bg-red-500 hover:bg-red-400"
-                        onClick={() => handleEliminarBeneficio(beneficio._id)}
+                {user.status !== "commun" && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button
+                        variant="default"
+                        onClick={() => handleEditarBeneficio(beneficio)}
                       >
-                        Eliminar
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                        Editar
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Editar Beneficio</DialogTitle>
+                        <DialogDescription>
+                          Edita el beneficio aquí. Haga clic en Guardar cuando
+                          haya terminado.
+                        </DialogDescription>
+                      </DialogHeader>
+                      <div className="grid gap-4 py-4">
+                        <div className="grid items-center grid-cols-4 gap-4">
+                          <Label
+                            htmlFor="titulo-editado"
+                            className="text-right"
+                          >
+                            Titulo
+                          </Label>
+                          <Input
+                            id="titulo-editado"
+                            value={tituloEditado}
+                            onChange={(e) => setTituloEditado(e.target.value)}
+                            className="col-span-3"
+                          />
+                        </div>
+                        <div className="grid items-center grid-cols-4 gap-4">
+                          <Label
+                            htmlFor="descripcion-editada"
+                            className="text-right"
+                          >
+                            Descripcion
+                          </Label>
+                          <Input
+                            id="descripcion-editada"
+                            value={descripcionEditada}
+                            onChange={(e) =>
+                              setDescripcionEditada(e.target.value)
+                            }
+                            className="col-span-3"
+                          />
+                        </div>
+                      </div>
+                      <DialogFooter>
+                        <DialogClose asChild>
+                          <Button type="submit" onClick={handleGuardarCambios}>
+                            Guardar
+                          </Button>
+                        </DialogClose>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                )}
+
+                {user.status !== "commun" && (
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="destructive">Eliminar</Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          ¿Está seguro de eliminar este beneficio?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Este beneficio no se eliminará permanentemente, podrá
+                          recuperarlo en la sección de Administrador.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction
+                          className="text-white bg-red-500 hover:bg-red-400"
+                          onClick={() => handleEliminarBeneficio(beneficio._id)}
+                        >
+                          Eliminar
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                )}
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button variant={"default"}>Solicitar</Button>
