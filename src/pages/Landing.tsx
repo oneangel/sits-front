@@ -1,15 +1,21 @@
 import Header from "@/components/landing/Header";
 import img1 from "@/assets/images/img1landing.png";
-import shield from "@/assets/images/shield.png";
-import deposit from "@/assets/images/deposit.png";
-import money from "@/assets/images/money.png";
 import teamsits from "@/assets/images/teamsits.png";
 import dashboard from "@/assets/images/dashboard.png";
 import l2 from "@/assets/images/l2.png";
-import sits from "@/assets/images/sits.png";
 import { Button } from "@/components/ui/button";
-import Card from "@/components/landing/Card";
 import { ContainerScroll } from "../components/ui/container-scroll-animation.tsx";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Footer from "@/components/landing/Footer.tsx";
+import { beneficios } from "../const/benefits.ts";
+import ExpandableCardDemo from "@/components/landing/ExpandibleCard.tsx";
 
 function Landing() {
   return (
@@ -53,7 +59,7 @@ function Landing() {
         {/* Titulo */}
         <div className="px-10 mb-10 lg:w-1/3">
           <h3 className="text-5xl font-bold">
-            Fuerza sindical en Norteamérica
+            Valores y Alcances
           </h3>
           <p className="text-lg mt-3 text-[#626479]">
             Nuestro sindicato ofrece beneficios integrales y económicos, como
@@ -61,26 +67,37 @@ function Landing() {
             legal gratuita.
           </p>
         </div>
-        {/* Cards */}
-        <div className="grid mx-20 md:mx-0 md:grid-cols-3 lg:w-2/3 gap-9">
-          <Card
-            imgSrc={shield}
-            altText="Escudo"
-            text="Nuestro sindicato brinda apoyo integral"
-            className=""
-          />
-          <Card
-            imgSrc={deposit}
-            altText="Depósito"
-            text="Caja de Ahorro flexible y accesible"
-            className="lg:mt-12"
-          />
-          <Card
-            imgSrc={money}
-            altText="Dinero"
-            text="Nuestro sindicato brinda apoyo integral"
-            className=""
-          />
+        {/* Carrusel de Beneficios */}
+        <div className="p-16 mx-auto my-auto md:p-20 lg:p-0">
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full max-w-3xl"
+          >
+            <CarouselContent>
+              {beneficios.map((beneficio, index) => (
+                <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="h-[200px]">
+                      <CardHeader>
+                        <CardTitle className="truncate">
+                          {beneficio.titulo}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex items-center justify-center h-full -mt-5 overflow-hidden">
+                        <p className="overflow-y-auto text-lg">
+                          {beneficio.descripcion}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
         </div>
       </div>
 
@@ -105,36 +122,41 @@ function Landing() {
         </div>
       </div>
 
-{/* Section 4 */}
-<div className="flex flex-col overflow-hidden">
-  <ContainerScroll
-    titleComponent={
-      <>
-        <h1 className="text-4xl font-semibold text-black dark:text-white">
-        Impulsa tu futuro <br />
-          <span className="text-4xl md:text-[5rem] font-bold mt-1 leading-none">
-          Únete a nuestro sindicato 
-          </span>
-        </h1>
-      </>
-    }
-  >
-    <img
-      src={dashboard}
-      alt="hero"
-      style={{
-        maxWidth: '100%', // Para mantener reactividad
-        borderRadius: '16px', // Estilo redondeo
-        objectFit: 'cover', // Recorta la imagen para llenar el contenedor
-        width: '1400',
-        height: '720', // Mantiene la proporción
-      }}
-      draggable={false}
-    />
-  </ContainerScroll>
-</div>
+      {/* section 4 */}
+      <div className="my-20">
+        <ExpandableCardDemo />
+      </div>
 
       {/* Section 5 */}
+      <div className="flex flex-col overflow-hidden">
+        <ContainerScroll
+          titleComponent={
+            <>
+              <h1 className="text-4xl font-semibold text-black dark:text-white">
+                Impulsa tu futuro <br />
+                <span className="text-4xl md:text-[5rem] font-bold mt-1 leading-none">
+                  Únete a nuestro sindicato
+                </span>
+              </h1>
+            </>
+          }
+        >
+          <img
+            src={dashboard}
+            alt="hero"
+            style={{
+              maxWidth: "100%", // Para mantener reactividad
+              borderRadius: "16px", // Estilo redondeo
+              objectFit: "cover", // Recorta la imagen para llenar el contenedor
+              width: "1400",
+              height: "720", // Mantiene la proporción
+            }}
+            draggable={false}
+          />
+        </ContainerScroll>
+      </div>
+
+      {/* Section 6 */}
       <div className="max-w-screen-xl bg-gradient-to-br from-yellow-400 to-amber-500 py-20 mx-auto rounded-[48px] mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="col-span-1 mx-4 my-auto text-white md:col-span-2 md:mx-20">
           <h2 className="text-3xl font-bold md:text-5xl">
@@ -157,41 +179,7 @@ function Landing() {
       </div>
 
       {/* Footer */}
-      <div className="w-full bg-[#0F0E17] py-20 mt-20 grid md:grid-cols-4 px-20">
-        <div className="flex justify-between col-span-1 md:flex-col md:h-72">
-          <img src={sits} alt="" className="size-20" />
-          <p className="mt-4 text-white md:mt-0">
-            © SITS todos los derechos reservados
-          </p>
-        </div>
-        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
-          <h3 className="text-lg font-semibold text-white">Plataforma</h3>
-          <a href="" className="text-base text-white">
-            Inicio
-          </a>
-          <a href="" className="text-base text-white">
-            Novedades
-          </a>
-          <a href="" className="text-base text-white">
-            Nosotros
-          </a>
-        </div>
-        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
-          <h3 className="text-lg font-semibold text-white">Ayuda</h3>
-          <a href="" className="text-base text-white">
-            Preguntas frecuentes
-          </a>
-        </div>
-        <div className="flex flex-col col-span-1 gap-1 mt-10 md:mt-0">
-          <h3 className="text-lg font-semibold text-white">Contacto</h3>
-          <a href="" className="text-base text-white">
-            Tel. (618)-300-8913
-          </a>
-          <a href="" className="w-48 text-base text-white">
-            Calle Hilario Moreno #404 Col. Azteca
-          </a>
-        </div>
-      </div>
+      <Footer />
     </>
   );
 }
