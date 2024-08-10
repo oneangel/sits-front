@@ -124,6 +124,10 @@ function Landing() {
 
       {/* section 4 */}
       <div className="my-20">
+      <h3 className="text-3xl font-bold md:text-5xl">
+              Nuestros <span className="text-yellow-400">Beneficios</span> esto lo 
+              <span className="text-[#FF8906]"> Centras</span>
+            </h3>
         <ExpandableCardDemo />
       </div>
 
