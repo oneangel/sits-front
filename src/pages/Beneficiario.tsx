@@ -14,13 +14,19 @@ const UserDetails: React.FC = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get(`https://sits.onrender.com/api/users/${userId}`);
+        console.log(response.data); // Verifica aquí qué datos estás recibiendo
         setUser(response.data);
       } catch (error) {
+        if (error.response) {
+          console.error(`Error: ${error.response.status} - ${error.response.data}`);
+        } else {
+          console.error("Network error or other issue:", error.message);
+        }
         setError("Usuario no encontrado.");
-      } finally {
-        setIsLoading(false);
       }
+      
     };
+    
 
     if (userId) {
       fetchUser();
@@ -28,11 +34,9 @@ const UserDetails: React.FC = () => {
       setError("ID de usuario no proporcionado.");
       setIsLoading(false);
     }
+    
   }, [userId]);
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
 
   if (error) {
     return <div>{error}</div>;

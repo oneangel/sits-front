@@ -47,7 +47,7 @@ export type User = {
 export default function Admin() {
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -195,9 +195,8 @@ export default function Admin() {
     );
   }, [showActive]);
 
-  if (isLoading) {
-    return <div>Cargando...</div>;
-  }
+
+  
 
   if (error) {
     return <div>{error}</div>;
