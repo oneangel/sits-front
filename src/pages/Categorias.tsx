@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
@@ -128,11 +128,11 @@ const Categorias = () => {
 
   return (
     <div>
-      <h1>Seleccione una categoría de beneficios</h1>
+      <h1 className="mt-10 mb-4 text-xl font-semibold">Seleccione una categoría de beneficios</h1>
       <select
         value={selectedCategory}
         onChange={handleCategoryChange}
-        className="mb-4 p-2 border border-gray-300 rounded"
+        className="p-2 mb-4 border border-gray-300 rounded"
       >
         {categorias.map((cat) => (
           <option key={cat} value={cat}>
@@ -145,13 +145,13 @@ const Categorias = () => {
       ) : error ? (
         <div>Error al cargar: {error}</div>
       ) : (
-        <ul ref={parent} className="grid grid-cols-1 gap-4">
+        <ul ref={parent} className="grid grid-cols-3 gap-4" >
           {beneficios.map((beneficio) => (
-            <Card key={beneficio._id} className="border rounded-md">
+            <Card key={beneficio._id} className="col-span-1 border rounded-md">
               <CardHeader>
                 <CardTitle>{beneficio.titulo}</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="max-h-[200px] h-[200px]"  >
                 <p>{beneficio.descripcion}</p>
               </CardContent>
               <CardFooter className="flex justify-between">
@@ -237,7 +237,7 @@ const Categorias = () => {
                 </AlertDialog>
                 <Dialog>
                   <DialogTrigger asChild>
-                    <Button variant="primary">Solicitar</Button>
+                    <Button variant={"default"}>Solicitar</Button>
                   </DialogTrigger>
                   <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>

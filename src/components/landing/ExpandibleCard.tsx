@@ -123,46 +123,49 @@ export default function ExpandableCardDemo() {
         ) : null}
       </AnimatePresence>
       <ul className="grid grid-cols-1 gap-4 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-  {cards.map((card, index) => (
-    <motion.div
-      layoutId={`card-${card.title}-${id}`}
-      key={`card-${card.title}-${id}`}
-      onClick={() => setActive(card)}
-      className="flex flex-col items-center justify-between p-8 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-200 rounded-xl"
-    >
-      <div className="flex flex-col gap-4 md:flex-row">
-        <motion.div layoutId={`image-${card.title}-${id}`}>
-          <img
-            src={card.src}
-            alt={card.title}
-            className="object-cover object-top w-40 h-40 rounded-lg md:h-14 md:w-14"
-          />
-        </motion.div>
-        <div className="">
-          <motion.h3
-            layoutId={`title-${card.title}-${id}`}
-            className="font-medium text-center text-neutral-800 dark:text-neutral-200 md:text-left"
+        {cards.map((card, index) => (
+          <motion.div
+            layoutId={`card-${card.title}-${id}`}
+            key={`card-${card.title}-${id}`}
+            onClick={() => setActive(card)}
+            className="flex flex-col justify-between p-8 cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-200 rounded-xl"
           >
-            {card.title}
-          </motion.h3>
-          <motion.p
-            layoutId={`description-${card.description}-${id}`}
-            className="text-center text-neutral-600 dark:text-neutral-400 md:text-left"
-          >
-            {card.description}
-          </motion.p>
-        </div>
-      </div>
-      <motion.button
-        layoutId={`button-${card.title}-${id}`}
-        className="px-4 py-2 mt-4 text-sm font-bold text-black bg-gray-100 rounded-full hover:bg-green-500 hover:text-white md:mt-0"
-      >
-        {card.ctaText}
-      </motion.button>
-    </motion.div>
-  ))}
-</ul>
-
+            <div className="flex flex-col gap-4 md:flex-row">
+              <motion.div layoutId={`image-${card.title}-${id}`}>
+                <img
+                  src={card.src}
+                  alt={card.title}
+                  className="object-cover object-top w-40 h-40 rounded-lg md:h-14 md:w-14"
+                />
+              </motion.div>
+              <div className="flex-1">
+                {" "}
+                {/* Add this flex-1 class to take up remaining space */}
+                <motion.h3
+                  layoutId={`title-${card.title}-${id}`}
+                  className="font-medium text-left text-neutral-800 dark:text-neutral-200 md:text-left"
+                >
+                  {card.title}
+                </motion.h3>
+                <motion.p
+                  layoutId={`description-${card.description}-${id}`}
+                  className="text-left text-neutral-600 dark:text-neutral-400 md:text-left"
+                >
+                  {card.description}
+                </motion.p>
+              </div>
+            </div>
+            <div className="flex justify-end mt-4 md:mt-0">
+              <motion.button
+                layoutId={`button-${card.title}-${id}`}
+                className="w-20 px-4 py-2 text-sm font-bold text-black bg-gray-100 rounded-full hover:bg-green-500 hover:text-white"
+              >
+                {card.ctaText}
+              </motion.button>
+            </div>
+          </motion.div>
+        ))}
+      </ul>
     </>
   );
 }

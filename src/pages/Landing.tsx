@@ -58,9 +58,7 @@ function Landing() {
       >
         {/* Titulo */}
         <div className="px-10 mb-10 lg:w-1/3">
-          <h3 className="text-5xl font-bold">
-            Valores y Alcances
-          </h3>
+          <h3 className="text-5xl font-bold"><span className="text-yellow-400">Valores</span> y Alcances</h3>
           <p className="text-lg mt-3 text-[#626479]">
             Nuestro sindicato ofrece beneficios integrales y económicos, como
             apoyo laboral, acceso a vivienda, asistencia médica y representación
@@ -81,7 +79,13 @@ function Landing() {
                   <div className="p-1">
                     <Card className="h-[200px]">
                       <CardHeader>
-                        <CardTitle className="truncate">
+                        <CardTitle
+                          className={`truncate ${
+                            index >= beneficios.length - 4
+                              ? ""
+                              : "text-yellow-400"
+                          }`}
+                        >
                           {beneficio.titulo}
                         </CardTitle>
                       </CardHeader>
@@ -123,11 +127,10 @@ function Landing() {
       </div>
 
       {/* section 4 */}
-      <div className="my-20">
-      <h3 className="text-3xl font-bold md:text-5xl">
-              Nuestros <span className="text-yellow-400">Beneficios</span> esto lo 
-              <span className="text-[#FF8906]"> Centras</span>
-            </h3>
+      <div className="mx-10 mt-20 md:mx-20">
+        <h3 className="my-10 text-3xl font-bold text-center md:text-5xl">
+          Nuestros <span className="text-yellow-400">Beneficios</span>
+        </h3>
         <ExpandableCardDemo />
       </div>
 

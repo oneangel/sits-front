@@ -20,22 +20,22 @@ export const beneficios = [
         "Siempre congruentes en el Decir y el hacer mas con menos",
     },
     {
-      titulo: "NACIONAL",
+      titulo: "Nacional",
       descripcion:
         "Se tiene cobertura en todos los estados de la República Mexicana",
     },
     {
-      titulo: "AUTONOMA",
+      titulo: "Autonoma",
       descripcion:
         "Libre de promover la nueva Sindicación del T-MEC",
     },
     {
-      titulo: "TRANSPARENTE",
+      titulo: "Transparente",
       descripcion:
         "Todos nuestros afiliados tienen el mismo derecho y voto..",
     },
     {
-      titulo: "TRABAJADOR T-MEC",
+      titulo: "Trabajador T-MEC",
       descripcion:
         "Apoyamos trabajadores de Mexico, EEUU y CANADA.",
     }
