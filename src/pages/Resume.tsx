@@ -44,6 +44,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { IconPlus } from "@tabler/icons-react";
 import { useAuth } from "@/context/AuthContext";
 import { Textarea } from "@/components/ui/textarea";
+import Swal from "sweetalert2";
 
 const Resumen = () => {
   const [parent] = useAutoAnimate();
@@ -80,6 +81,11 @@ const Resumen = () => {
     try {
       await axios.post("https://sits.onrender.com/enviar-correo", correoData);
       console.log("Correo enviado exitosamente");
+      Swal.fire({
+        title: `Correo enviado exitosamente!`,
+        text: "Su solicitud ha sido enviada, Estaremos comunicándonos con usted lo mas pronto posible",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error al enviar el correo:", error);
     }
@@ -87,7 +93,7 @@ const Resumen = () => {
 
   const handleEliminarBeneficio = async (id) => {
     try {
-      await axios.delete(`https://sits.onrender.com/api/beneficios/${id}`); // Asegúrate de que la URL es correcta
+      await axios.delete(`https://sits.onrender.com/api/beneficios/${id}`);
       setBeneficiosRecientes(
         beneficiosRecientes.filter((beneficio) => beneficio._id !== id)
       );
@@ -322,52 +328,63 @@ const Resumen = () => {
                 </AlertDialog>
               )}
               {user.status === "commun" && (
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>Solicitar</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle className="mb-4 text-2xl">Solicitud de Beneficio</DialogTitle>
-                    <DialogDescription className="font-semibold text-black text-md">
-                      Beneficio Solicitado: <span className="font-normal text-zinc-400"> {beneficio.titulo}</span>
-                    </DialogDescription>
-                    <DialogDescription className="font-semibold text-black text-md">
-                      Beneficiario: <span className="font-normal text-zinc-400">{user.nombre}</span>
-                    </DialogDescription>
-                  </DialogHeader>
-                  <DialogFooter>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button type="button">Solicitar</Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Confirmación de Solicitud
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            Su información y su solicitud será enviada a las
-                            oficinas de SITS donde nos estaremos comunicando con
-                            usted lo más pronto posible.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => {
-                              // Lógica para enviar el correo
-                              enviarCorreo(beneficio.titulo);
-                            }}
-                          >
-                            Aceptar
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>Solicitar</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle className="mb-4 text-2xl">
+                        Solicitud de Beneficio
+                      </DialogTitle>
+                      <DialogDescription className="font-semibold text-black text-md">
+                        Beneficio Solicitado:{" "}
+                        <span className="font-normal text-zinc-400">
+                          {" "}
+                          {beneficio.titulo}
+                        </span>
+                      </DialogDescription>
+                      <DialogDescription className="font-semibold text-black text-md">
+                        Beneficiario:{" "}
+                        <span className="font-normal text-zinc-400">
+                          {user.nombre}
+                        </span>
+                      </DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button type="button">Solicitar</Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>
+                              Confirmación de Solicitud
+                            </AlertDialogTitle>
+                            <AlertDialogDescription>
+                              Su información y su solicitud será enviada a las
+                              oficinas de SITS donde nos estaremos comunicando
+                              con usted lo más pronto posible.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                            <DialogClose asChild>
+                              <AlertDialogAction
+                                onClick={() => {
+                                  // Lógica para enviar el correo
+                                  enviarCorreo(beneficio.titulo);
+                                }}
+                              >
+                                Aceptar
+                              </AlertDialogAction>
+                            </DialogClose>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               )}
             </CardFooter>
           </Card>
