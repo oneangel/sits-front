@@ -36,6 +36,9 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/AuthContext";
+import Swal from "sweetalert2";
+
 
 export type User = {
   id: string;
@@ -43,6 +46,7 @@ export type User = {
   isActive: boolean;
   CURP: string;
 };
+
 
 export default function Admin() {
   const [users, setUsers] = useState<User[]>([]);
@@ -69,7 +73,7 @@ export default function Admin() {
     };
     fetchUsers();
   }, []);
-
+  const { user } = useAuth();
   const toggleStatus = useCallback(async (userId: string) => {
     try {
       await axios.put(
@@ -81,6 +85,12 @@ export default function Admin() {
           user.id === userId ? { ...user, isActive: !user.isActive } : user
         )
       );
+
+      Swal.fire({
+        title: `Operacion Realizada`,
+        text: "Listo!",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error al cambiar el estado del usuario:", error);
     }

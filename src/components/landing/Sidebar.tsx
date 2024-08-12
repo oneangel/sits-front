@@ -38,6 +38,13 @@ const Sidebar: React.FC = () => {
     }
   };
 
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/"); // Asegúrate de tener 'navigate' disponible en este componente
+  };
+
   const toggleSidebar = () => {
     setSidebarVisible(!isSidebarVisible);
   };
@@ -64,7 +71,9 @@ const Sidebar: React.FC = () => {
           isSidebarVisible ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <h1 className="m-4 text-lg font-bold">Bienvenido, <span className="">{user.nombre}!</span></h1>
+        <h1 className="m-4 text-lg font-bold">
+          Bienvenido, <span className="">{user.nombre}!</span>
+        </h1>
         <div>
           <h1 className="m-4 mt-10 text-lg text-zinc-500">Tableros</h1>
           <ul className="mt-4">
@@ -107,7 +116,7 @@ const Sidebar: React.FC = () => {
 
         <div className="flex flex-col items-center justify-center mt-auto mb-4">
           <button
-            onClick={() => navigate("/")}
+            onClick={handleLogout}
             className="flex gap-2 mb-10 -ml-16 transition px- text-destructive hover:scale-105 hover:text-red-700 hover:font-semibold"
           >
             <span>
