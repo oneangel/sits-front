@@ -65,9 +65,7 @@ export default function Admin() {
         setUsers(usersData);
       } catch (error) {
         setError("Error al cargar los usuarios.");
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
     fetchUsers();
   }, []);

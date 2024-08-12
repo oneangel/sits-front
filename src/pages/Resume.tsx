@@ -65,7 +65,7 @@ const Resumen = () => {
 
   const { user } = useAuth();
 
-  const enviarCorreo = async (tituloBeneficio, nombreUsuario) => {
+  const enviarCorreo = async (tituloBeneficio) => {
     const fechaEnvio = new Date().toLocaleDateString();
     const correoData = {
       titulo: `Beneficio - ${tituloBeneficio}`,
