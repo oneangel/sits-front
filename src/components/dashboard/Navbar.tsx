@@ -57,9 +57,7 @@ export function Navbar() {
           <BreadcrumbItem>
             <BreadcrumbLink href="/overview">Tableros</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <SlashIcon />
-          </BreadcrumbSeparator>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>Resumen</BreadcrumbPage>
           </BreadcrumbItem>
@@ -73,9 +71,7 @@ export function Navbar() {
           <BreadcrumbItem>
             <BreadcrumbLink href="/overview">Tableros</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <SlashIcon />
-          </BreadcrumbSeparator>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>Categorías</BreadcrumbPage>
           </BreadcrumbItem>
@@ -89,15 +85,11 @@ export function Navbar() {
           <BreadcrumbItem>
             <BreadcrumbLink href="/overview">Tableros</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <SlashIcon />
-          </BreadcrumbSeparator>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink href="/overview/usuarios">Administración</BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <SlashIcon />
-          </BreadcrumbSeparator>
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>Usuarios</BreadcrumbPage>
           </BreadcrumbItem>
@@ -110,7 +102,7 @@ export function Navbar() {
 
   return (
     <nav className="flex items-center justify-between w-full px-10 bg-white border-b-2 h-14">
-      <Breadcrumb className="hidden md:block">
+      <Breadcrumb className="hidden md:block ">
         {renderBreadcrumb()}
       </Breadcrumb>
       <button

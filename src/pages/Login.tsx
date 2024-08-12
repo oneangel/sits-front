@@ -7,6 +7,7 @@ import loginImage from "@/assets/images/login1.png";
 import sits from "@/assets/images/sitshd.png";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useAuth } from "@/context/AuthContext";
+import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,35 +22,43 @@ function Login() {
         CURP,
         password,
       });
-  
-      console.log('Respuesta del servidor:', response.data);
-  
+
+      console.log("Respuesta del servidor:", response.data);
+
       const { nombre, status, CURP: curpFromResponse, numero } = response.data;
       console.log(`nombre ${nombre}`);
       console.log(`curp ${curpFromResponse}`);
       console.log(`status ${status}`);
       console.log(`numero ${numero}`);
-  
+
       // Almacenar los datos en el contexto de autenticación
       login({ nombre, CURP: curpFromResponse, status, numero });
-  
+
       navigate("/overview");
     } catch (error) {
       console.error("Error en la solicitud de inicio de sesión:", error);
       if (error.response && error.response.status === 401) {
-        setError("Credenciales inválidas");
+        Swal.fire({
+          title: "Credenciales inválidas",
+          text: "Ingresalas correctamente",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
       } else {
-        setError("Error en el servidor");
+        Swal.fire({
+          title: "Error en el servidor",
+          text: "Vuelve a intentarlo mas tarde",
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
       }
     }
   };
-  
-  
 
   return (
     <div className="flex flex-col h-screen">
       <div className="flex items-center mx-36">
-        <button 
+        <button
           className="flex items-center text-gray-700"
           onClick={() => navigate(-1)}
         >
@@ -77,11 +86,9 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          {error && <p className="mt-2 text-red-500">{error}</p>}
-          <Link to="/forgotpasword" className="mt-6 mb-10 text-base">
-            ¿Olvidaste tu contraseña?
-          </Link>
-          <Button onClick={handleLogin}>Iniciar Sesión</Button>
+          <Button onClick={handleLogin} className="mt-6 mb-10 ">
+            Iniciar Sesión
+          </Button>
           <Link to="/register" className="mt-10">
             ¿No tienes una cuenta aún?{" "}
             <span className="text-yellow-500">Regístrate</span>

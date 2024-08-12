@@ -6,6 +6,7 @@ import axios from "axios";
 import sits from "@/assets/images/sitshd.png";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Register = () => {
   });
   const [files, setFiles] = useState({});
   const [step, setStep] = useState(1);
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -63,22 +65,61 @@ const Register = () => {
         numero: formData.numero,
       });
 
-      alert("Correo enviado exitosamente");
-
-      alert("User registered successfully");
+      Swal.fire({
+        title: 'Registro exitoso!',
+        text: "Usuario registrado correctamente.",
+        icon: 'success',
+        confirmButtonText: 'Cerrar'
+      });
     } catch (error) {
       console.error("Error registering user:", error);
-      alert("An error occurred while registering the user");
+      Swal.fire({
+        title: 'Ha occurrido un error mientras se registraba al usuario!',
+        text: "Vuelve a intentarlo mas tarde",
+        icon: 'error',
+        confirmButtonText: 'Cerrar'
+      });
     }
   };
 
+  const validateStep1 = () => {
+    const requiredFields = ['nombre', 'CURP', 'password', 'confirmPassword', 'numero'];
+    return requiredFields.every(field => formData[field] !== "");
+  };
+
+  const validateStep2 = () => {
+    const requiredFiles = ['INE', 'actaNacimiento', 'comprobanteDomicilio', 'comprobanteIngrsos'];
+    return requiredFiles.every(file => files[file] !== undefined);
+  };
+
   const nextStep = () => {
+    if (step === 1 && !validateStep1()) {
+      setError('Necesitas ingresar tus datos antes de continuar');
+      return;
+    }
+    if (step === 2 && !validateStep2()) {
+      setError('Necesitas cargar todos los archivos antes de continuar');
+      return;
+    }
+    setError(null);
     setStep(step + 1);
   };
 
   const prevStep = () => {
+    setError(null); // Clear error message when going back
     setStep(step - 1);
   };
+
+  // Show the alert if there's an error only when trying to move to the next step
+  if (error) {
+    Swal.fire({
+      title: 'Cuidado!',
+      text: error,
+      icon: 'info',
+      confirmButtonText: 'Cerrar'
+    });
+    setError(null); // Clear the error after showing the alert
+  }
 
   return (
     <div className="h-screen grid-cols-5 2xl:grid">
