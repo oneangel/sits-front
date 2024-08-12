@@ -3,8 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import registerImage from "@/assets/images/register1.png";
 import axios from "axios";
+import sits from "@/assets/images/sitshd.png";
+import { IconArrowLeft } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     nombre: "",
     CURP: "",
@@ -83,6 +88,15 @@ const Register = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center col-span-3 my-20 bg-white mx-14 lg:mx-56 2xl:-ml-10">
+        <div className="flex justify-end ">
+          <button
+            className="flex items-center text-gray-700"
+            onClick={() => navigate(-1)}
+          >
+            <IconArrowLeft className="size-12" />
+            <img src={sits} alt="Logo" className="h-24" />
+          </button>
+        </div>
         <h2 className="text-4xl font-semibold">Registrarse</h2>
         <p className="text-lg text-[#313131] mt-4 mb-9 ">
           Vamos a prepararte para que puedas acceder a tu cuenta personal.
@@ -131,17 +145,16 @@ const Register = () => {
                 />
               </div>
               <Input
-                  type="number"
-                  id="numero"
-                  name="numero"
-                  className="w-full col-span-2"
-                  placeholder="Introduzca su numero"
-                  value={formData.numero}
-                  onChange={handleChange}
-                  required
-                />
+                type="number"
+                id="numero"
+                name="numero"
+                className="w-full col-span-2"
+                placeholder="Introduzca su numero"
+                value={formData.numero}
+                onChange={handleChange}
+                required
+              />
             </div>
-            
           )}
           {step === 2 && (
             <>

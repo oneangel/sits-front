@@ -99,7 +99,7 @@ export default function ExpandableCardDemo() {
 
                   <motion.a
                     layoutId={`button-${active.title}-${id}`}
-                    className="px-4 py-3 text-sm font-bold text-white bg-green-500 rounded-full"
+                    className="px-4 py-3 text-sm font-bold text-white bg-yellow-400 rounded-full"
                   >
                     {active.ctaText}
                   </motion.a>
@@ -158,7 +158,7 @@ export default function ExpandableCardDemo() {
             <div className="flex justify-end mt-4 md:mt-0">
               <motion.button
                 layoutId={`button-${card.title}-${id}`}
-                className="w-20 px-4 py-2 text-sm font-bold text-black bg-gray-100 rounded-full hover:bg-green-500 hover:text-white"
+                className="w-20 px-4 py-2 text-sm font-bold text-black bg-gray-100 rounded-full hover:bg-primary hover:text-white"
               >
                 {card.ctaText}
               </motion.button>

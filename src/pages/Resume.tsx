@@ -224,7 +224,7 @@ const Resumen = () => {
       )}
 
       <ul
-        className="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3 max-h-[700px] overflow-auto"
+        className="grid grid-cols-1 gap-4 mt-10 lg:grid-cols-3 md:max-h-[700px] md:overflow-auto"
         ref={parent}
       >
         {beneficiosRecientes.map((beneficio) => (
@@ -326,12 +326,12 @@ const Resumen = () => {
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>Solicitud de Beneficio</DialogTitle>
-                    <DialogDescription>
-                      Beneficio Solicitado: {beneficio.titulo}
+                    <DialogTitle className="mb-4 text-2xl">Solicitud de Beneficio</DialogTitle>
+                    <DialogDescription className="font-semibold text-black text-md">
+                      Beneficio Solicitado: <span className="font-normal text-zinc-400"> {beneficio.titulo}</span>
                     </DialogDescription>
-                    <DialogDescription>
-                      Beneficiario: {user.nombre}
+                    <DialogDescription className="font-semibold text-black text-md">
+                      Beneficiario: <span className="font-normal text-zinc-400">{user.nombre}</span>
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>

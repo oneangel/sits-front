@@ -34,14 +34,14 @@ const Header = () => {
           >
             <img src={sits} className="size-12" alt="Flowbite Logo"></img>
           </a>
-          <div className="flex gap-2 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+          <div className="flex gap-4 space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             <button
               onClick={handleLoginClick}
-              className="transition hover:scale-105"
+              className="transition hover:scale-105 hover:text-primary"
             >
               Iniciar Sesión
             </button>
-            <Button onClick={handleRegisterClick}>Registrarse</Button>
+            <Button onClick={handleRegisterClick} className="transition hover:scale-105 hover:bg-yellow-500">Registrarse</Button>
             {/* Boton responsive */}
             <button
               onClick={reveal}
@@ -73,7 +73,7 @@ const Header = () => {
             className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
             id="navbar-sticky"
           >
-            <ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+            <ul className="flex flex-col p-4 mt-4 -mr-32 font-medium border border-gray-100 rounded-lg md:p-0 bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <a
                   href="#home"

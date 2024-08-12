@@ -16,8 +16,10 @@ import {
 import Footer from "@/components/landing/Footer.tsx";
 import { beneficios } from "../const/benefits.ts";
 import ExpandableCardDemo from "@/components/landing/ExpandibleCard.tsx";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
+  const navigate = useNavigate();
   return (
     <>
       {/* nav bar */}
@@ -36,8 +38,8 @@ function Landing() {
             beneficios tangibles para trabajadores y sus familias.
           </p>
           <div className="flex flex-row gap-5 mt-10">
-            <Button className="h-12 bg-red-400 w-28">Comenzar</Button>
-            <Button className="h-12 bg-transparent border border-white w-28">
+            <Button onClick={() => navigate("/login")} className="h-12 text-white transition bg-red-400 w-28 hover:scale-105 hover:bg-red-500">Comenzar</Button>
+            <Button onClick={() => navigate("/register")} className="h-12 transition bg-transparent border border-white hover:bg-white w-28 hover:scale-105">
               Registrarse
             </Button>
           </div>
