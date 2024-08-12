@@ -35,19 +35,24 @@ function Login() {
       login({ nombre, CURP: curpFromResponse, status, numero });
 
       navigate("/overview");
+      Swal.fire({
+        title: `Bienvenido ${nombre}`,
+        text: "Todo esta listo!",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error en la solicitud de inicio de sesión:", error);
       if (error.response && error.response.status === 401) {
         Swal.fire({
-          title: "Credenciales inválidas",
-          text: "Ingresalas correctamente",
+          title: "Cuenta Inactiva!",
+          text: "Comunicate con el asesor de SITS!",
           icon: "error",
           confirmButtonText: "Aceptar",
         });
       } else {
         Swal.fire({
-          title: "Error en el servidor",
-          text: "Vuelve a intentarlo mas tarde",
+          title: "Credenciales Incorrectas!",
+          text: "Vuelve a intentarlo!",
           icon: "error",
           confirmButtonText: "Aceptar",
         });

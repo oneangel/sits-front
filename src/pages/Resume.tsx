@@ -43,6 +43,7 @@ import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { IconPlus } from "@tabler/icons-react";
 import { useAuth } from "@/context/AuthContext";
+import { Textarea } from "@/components/ui/textarea";
 
 const Resumen = () => {
   const [parent] = useAutoAnimate();
@@ -188,7 +189,7 @@ const Resumen = () => {
                 <Label htmlFor="description-nueva" className="text-right">
                   Descripcion
                 </Label>
-                <Input
+                <Textarea
                   id="description-nueva"
                   value={descripcionNueva}
                   onChange={(e) => setDescripcionNueva(e.target.value)}
@@ -275,7 +276,7 @@ const Resumen = () => {
                       >
                         Descripcion
                       </Label>
-                      <Input
+                      <Textarea
                         id="descripcion-editada"
                         value={descripcionEditada}
                         onChange={(e) => setDescripcionEditada(e.target.value)}

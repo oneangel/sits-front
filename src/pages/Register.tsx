@@ -39,14 +39,34 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = new FormData();
-    for (const key in formData) {
-      form.append(key, formData[key]);
-    }
-    for (const key in files) {
-      form.append(key, files[key]);
-    }
+  
     try {
+      // Mostrar alerta de cargando
+      const loadingAlert = Swal.fire({
+        title: "Registrando...",
+        text: "Por favor, espere mientras procesamos su registro.",
+        width: 400,
+        padding: "1em",
+        color: "#716add",
+        backdrop: `
+          rgba(0,0,123,0.4)
+          url("/images/nyan-cat.gif")
+          left top
+          no-repeat
+        `,
+        allowOutsideClick: false,
+        showConfirmButton: false, // Oculta el botón de confirmación
+      });
+  
+      // Crear y llenar el formulario de datos
+      const form = new FormData();
+      for (const key in formData) {
+        form.append(key, formData[key]);
+      }
+      for (const key in files) {
+        form.append(key, files[key]);
+      }
+  
       const res = await axios.post(
         "https://sits.onrender.com/api/register",
         form,
@@ -56,32 +76,39 @@ const Register = () => {
           },
         }
       );
+  
+      // Cerrar alerta de cargando
+      Swal.close(loadingAlert);
+  
       // Enviar correo después de registro exitoso
       await axios.post("https://sits.onrender.com/enviar-correo", {
         titulo: "Activación de Cuenta",
         agremiado: formData.nombre,
-        fecha: new Date().toLocaleDateString(), // Formatea la fecha actual
+        fecha: new Date().toLocaleDateString(),
         CURP: formData.CURP,
         numero: formData.numero,
       });
-
+  
       Swal.fire({
         title: 'Registro exitoso!',
-        text: "Usuario registrado correctamente.",
+        text: "Espere por favor a que nuestro equipo le contacte!",
         icon: 'success',
         confirmButtonText: 'Cerrar'
       });
     } catch (error) {
+      // Cerrar alerta de cargando en caso de error
+      Swal.close(loadingAlert);
+  
       console.error("Error registering user:", error);
       Swal.fire({
-        title: 'Ha occurrido un error mientras se registraba al usuario!',
-        text: "Vuelve a intentarlo mas tarde",
+        title: 'Ha ocurrido un error mientras se registraba al usuario!',
+        text: "Vuelve a intentarlo más tarde",
         icon: 'error',
         confirmButtonText: 'Cerrar'
       });
     }
   };
-
+  
   const validateStep1 = () => {
     const requiredFields = ['nombre', 'CURP', 'password', 'confirmPassword', 'numero'];
     return requiredFields.every(field => formData[field] !== "");
