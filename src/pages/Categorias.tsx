@@ -31,6 +31,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { DialogClose } from "@radix-ui/react-dialog";
 
@@ -49,8 +58,8 @@ const Categorias = () => {
   const [descripcionEditada, setDescripcionEditada] = useState("");
   const [idEditando, setIdEditando] = useState(null);
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value);
   };
 
   const enviarCorreo = async (tituloBeneficio) => {
@@ -131,32 +140,48 @@ const Categorias = () => {
       <h1 className="mt-10 mb-4 text-xl font-semibold">
         Seleccione una categoría de beneficios
       </h1>
-      <select
-        value={selectedCategory}
-        onChange={handleCategoryChange}
-        className="p-2 mb-4 border border-gray-300 rounded"
+
+      <Select
+        onValueChange={handleCategoryChange}
+        defaultValue={selectedCategory}
       >
-        {categorias.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
-      </select>
+        <SelectTrigger className="w-[280px]">
+          <SelectValue placeholder="Seleccione una categoría de beneficios" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Categorias</SelectLabel>
+            <SelectItem key="Apoyo" value="Apoyo">
+              Apoyo
+            </SelectItem>
+            <SelectItem key="Programas" value="Programas">
+              Programas
+            </SelectItem>
+            <SelectItem key="Otros" value="Otros">
+              Otros
+            </SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+
       {loading ? (
         <div>Cargando beneficios...</div>
       ) : error ? (
         <div>Error al cargar: {error}</div>
       ) : (
-        <ul ref={parent} className="grid grid-cols-3 gap-4">
+        <ul ref={parent} className="grid gap-4 mt-10 md:grid-cols-3">
           {beneficios.map((beneficio) => (
-            <Card key={beneficio._id} className="col-span-1 border rounded-md">
+            <Card
+              key={beneficio._id}
+              className="col-span-1 border rounded-md md:w-[440px]"
+            >
               <CardHeader>
                 <CardTitle>{beneficio.titulo}</CardTitle>
               </CardHeader>
               <CardContent className="max-h-[200px] h-[200px]">
                 <p>{beneficio.descripcion}</p>
               </CardContent>
-              <CardFooter className="flex justify-between">
+              <CardFooter className="flex justify-start gap-2">
                 {user.status !== "commun" && (
                   <Dialog>
                     <DialogTrigger asChild>
@@ -245,51 +270,53 @@ const Categorias = () => {
                     </AlertDialogContent>
                   </AlertDialog>
                 )}
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant={"default"}>Solicitar</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Solicitud de Beneficio</DialogTitle>
-                      <DialogDescription>
-                        Beneficio Solicitado: {beneficio.titulo}
-                      </DialogDescription>
-                      <DialogDescription>
-                        Beneficiario: {user.nombre}
-                      </DialogDescription>
-                    </DialogHeader>
-                    <DialogFooter>
-                      <AlertDialog>
-                        <AlertDialogTrigger asChild>
-                          <Button type="button">Solicitar</Button>
-                        </AlertDialogTrigger>
-                        <AlertDialogContent>
-                          <AlertDialogHeader>
-                            <AlertDialogTitle>
-                              Confirmación de Solicitud
-                            </AlertDialogTitle>
-                            <AlertDialogDescription>
-                              Su información y su solicitud será enviada a las
-                              oficinas de SITS donde nos estaremos comunicando
-                              con usted lo más pronto posible.
-                            </AlertDialogDescription>
-                          </AlertDialogHeader>
-                          <AlertDialogFooter>
-                            <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                            <AlertDialogAction
-                              onClick={() => {
-                                enviarCorreo(beneficio.titulo);
-                              }}
-                            >
-                              Aceptar
-                            </AlertDialogAction>
-                          </AlertDialogFooter>
-                        </AlertDialogContent>
-                      </AlertDialog>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                {user.status === "commun" && (
+                  <Dialog>
+                    <DialogTrigger asChild>
+                      <Button variant={"default"}>Solicitar</Button>
+                    </DialogTrigger>
+                    <DialogContent className="sm:max-w-[425px]">
+                      <DialogHeader>
+                        <DialogTitle>Solicitud de Beneficio</DialogTitle>
+                        <DialogDescription>
+                          Beneficio Solicitado: {beneficio.titulo}
+                        </DialogDescription>
+                        <DialogDescription>
+                          Beneficiario: {user.nombre}
+                        </DialogDescription>
+                      </DialogHeader>
+                      <DialogFooter>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button type="button">Solicitar</Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Confirmación de Solicitud
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                Su información y su solicitud será enviada a las
+                                oficinas de SITS donde nos estaremos comunicando
+                                con usted lo más pronto posible.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                              <AlertDialogAction
+                                onClick={() => {
+                                  enviarCorreo(beneficio.titulo);
+                                }}
+                              >
+                                Aceptar
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </DialogFooter>
+                    </DialogContent>
+                  </Dialog>
+                )}
               </CardFooter>
             </Card>
           ))}

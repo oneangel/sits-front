@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import UserCard from "../components/Beneficiarios/cards";
 import Sidebar from "@/components/landing/Sidebar";
+import { IconChevronLeft } from "@tabler/icons-react";
 
 const UserDetails: React.FC = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -44,8 +45,8 @@ const UserDetails: React.FC = () => {
 
   return (
     <>
-      <nav>Regresar</nav>
-      <div className="flex-1">
+      <nav></nav>
+      <div className="flex flex-col items-center justify-center h-screen mx-auto my-auto">
         {user && <UserCard {...user} />}
       </div>
     </>

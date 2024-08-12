@@ -321,6 +321,7 @@ const Resumen = () => {
                   </AlertDialogContent>
                 </AlertDialog>
               )}
+              {user.status === "commun" && (
               <Dialog>
                 <DialogTrigger asChild>
                   <Button>Solicitar</Button>
@@ -367,6 +368,7 @@ const Resumen = () => {
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
+              )}
             </CardFooter>
           </Card>
         ))}

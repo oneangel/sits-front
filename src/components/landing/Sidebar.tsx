@@ -74,6 +74,7 @@ const Sidebar: React.FC = () => {
         <h1 className="m-4 text-lg font-bold">
           Bienvenido, <span className="">{user.nombre}!</span>
         </h1>
+        <hr />
         <div>
           <h1 className="m-4 mt-10 text-lg text-zinc-500">Tableros</h1>
           <ul className="mt-4">
