@@ -39,10 +39,10 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    let loadingAlert; // Declarar la variable fuera del bloque `try` y `catch`
     try {
       // Mostrar alerta de cargando
-      const loadingAlert = Swal.fire({
+      loadingAlert = await Swal.fire({
         title: "Registrando...",
         text: "Por favor, espere mientras procesamos su registro.",
         width: 400,
@@ -57,7 +57,7 @@ const Register = () => {
         allowOutsideClick: false,
         showConfirmButton: false, // Oculta el botón de confirmación
       });
-  
+
       // Crear y llenar el formulario de datos
       const form = new FormData();
       for (const key in formData) {
@@ -66,7 +66,7 @@ const Register = () => {
       for (const key in files) {
         form.append(key, files[key]);
       }
-  
+
       const res = await axios.post(
         "https://sits.onrender.com/api/register",
         form,
@@ -76,10 +76,10 @@ const Register = () => {
           },
         }
       );
-  
+
       // Cerrar alerta de cargando
       Swal.close(loadingAlert);
-  
+
       // Enviar correo después de registro exitoso
       await axios.post("https://sits.onrender.com/enviar-correo", {
         titulo: "Activación de Cuenta",
@@ -88,44 +88,55 @@ const Register = () => {
         CURP: formData.CURP,
         numero: formData.numero,
       });
-  
+
       Swal.fire({
-        title: 'Registro exitoso!',
+        title: "Registro exitoso!",
         text: "Espere por favor a que nuestro equipo le contacte!",
-        icon: 'success',
-        confirmButtonText: 'Cerrar'
+        icon: "success",
+        confirmButtonText: "Cerrar",
       });
     } catch (error) {
       // Cerrar alerta de cargando en caso de error
       Swal.close(loadingAlert);
-  
+
       console.error("Error registering user:", error);
       Swal.fire({
-        title: 'Ha ocurrido un error mientras se registraba al usuario!',
+        title: "Ha ocurrido un error mientras se registraba al usuario!",
         text: "Vuelve a intentarlo más tarde",
-        icon: 'error',
-        confirmButtonText: 'Cerrar'
+        icon: "error",
+        confirmButtonText: "Cerrar",
       });
     }
   };
-  
+
   const validateStep1 = () => {
-    const requiredFields = ['nombre', 'CURP', 'password', 'confirmPassword', 'numero'];
-    return requiredFields.every(field => formData[field] !== "");
+    const requiredFields = [
+      "nombre",
+      "CURP",
+      "password",
+      "confirmPassword",
+      "numero",
+    ];
+    return requiredFields.every((field) => formData[field] !== "");
   };
 
   const validateStep2 = () => {
-    const requiredFiles = ['INE', 'actaNacimiento', 'comprobanteDomicilio', 'comprobanteIngrsos'];
-    return requiredFiles.every(file => files[file] !== undefined);
+    const requiredFiles = [
+      "INE",
+      "actaNacimiento",
+      "comprobanteDomicilio",
+      "comprobanteIngrsos",
+    ];
+    return requiredFiles.every((file) => files[file] !== undefined);
   };
 
   const nextStep = () => {
     if (step === 1 && !validateStep1()) {
-      setError('Necesitas ingresar tus datos antes de continuar');
+      setError("Necesitas ingresar tus datos antes de continuar");
       return;
     }
     if (step === 2 && !validateStep2()) {
-      setError('Necesitas cargar todos los archivos antes de continuar');
+      setError("Necesitas cargar todos los archivos antes de continuar");
       return;
     }
     setError(null);
@@ -140,10 +151,10 @@ const Register = () => {
   // Show the alert if there's an error only when trying to move to the next step
   if (error) {
     Swal.fire({
-      title: 'Cuidado!',
+      title: "Cuidado!",
       text: error,
-      icon: 'info',
-      confirmButtonText: 'Cerrar'
+      icon: "info",
+      confirmButtonText: "Cerrar",
     });
     setError(null); // Clear the error after showing the alert
   }
