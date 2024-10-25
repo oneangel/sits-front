@@ -206,204 +206,262 @@ export const CloseIcon = () => {
 const cards = [
   {
     description: "Económico",
-    title: "Beneficio Económico",
+    title: "Apoyo en el desarrollo laboral y talento humano",
     src: "https://img.freepik.com/vector-gratis/crecimiento-economico_24877-49231.jpg",
     ctaText: "Ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          La Caja de Ahorro Mutualista con más flexibilidad en México y adaptada
-          a la necesidad de cada Empresa afiliada; con beneficio económico para
-          todos los trabajadores afiliados, ganando intereses por los préstamos
-          otorgados con sus propios recursos y con tres tipos de préstamos para
-          todos los trabajadores. Sin revisar buró y sin aval, de acuerdo a la
-          capacidad de cada trabajador y de acuerdo a la ley; sin costo de
-          impuestos y con transparencia en la información y con acceso a estados
-          de Cuenta de Ahorro y Préstamos en una terminal pública con seguridad
-          en el acceso.
+          En nuestra organización, nos comprometemos a apoyar el crecimiento
+          profesional de nuestros afiliados a través de convenios estratégicos
+          con instituciones públicas y privadas. Ofrecemos asesoramiento
+          personalizado, capacitaciones especializadas y oportunidades de
+          certificación para potenciar el desarrollo laboral y el talento humano
+          de nuestra comunidad.
         </p>
       );
     },
   },
   {
     description: "Jurídico",
-    title: "Esquema Jurídico",
+    title: "Apoyo jurídico Laboral, Familiar, Mercantil y Penal.",
     src: "https://enfoque-estrategico.com/wp-content/uploads/2022/12/marco-juridico-mexico.jpeg",
     ctaText: "Ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          Todo afiliado a nuestro Sindicato tiene el derecho a ser representado
-          en problemas Mercantiles, Civiles, Penal y Familiar y sin costo por
-          Asesoria legal, gracias a nuestro equipo de abogados en todas las
-          ramas del derecho.
+          Nuestros afiliados cuentan con acceso a asesoría jurídica gratuita* en
+          diversas áreas del derecho, incluyendo asuntos laborales, familiares,
+          mercantiles y penales. Nuestro equipo de abogados especializados está
+          comprometido a brindar orientación y apoyo legal para ayudar a
+          nuestros miembros a navegar por desafíos legales y proteger sus
+          derechos. *Aplican algunas restricciones.
         </p>
       );
     },
   },
 
   {
-    description: "Salud",
-    title: "Salud",
+    description: "(Descuento con agencias funerarias)",
+    title: "Apoyo en servicio funerario.",
     src: "https://greentology.life/wp-content/uploads/2024/02/cuidar-la-salud.jpeg",
     ctaText: "Ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          Contamos con convenios de colaboración con Empresas dedicadas a todo
-          tipo de problemas de Salud con descuentos preferenciales.
+          Apoyo económico cubierto por el SITS, depende de la aportación mensual
+          y el número de agremiados. Apoyo para: Agremiado, Cónyuge, Hijos y
+          Padres del Agremiado.
         </p>
       );
     },
   },
   {
     description: "Familiar",
-    title: "Familiar",
+    title: "Apoyo en seguro de autos.",
     src: "https://img.freepik.com/free-vector/cartoon-pride-day-family-collection_23-2148927316.jpg",
     ctaText: "ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          Apoyamos a todos nuestros afiliados con asesoría de Psicólogos y
-          abogados en problemas familiares, drogadicción, feminicidio, violencia
-          familiar y apoyo económico mediante subsidio para enfermedades
-          crónicas.
+          Servicio cubierto por aseguradoras en convenio con el SITS, obteniendo
+          un 30% de descuento en el trámite total.
         </p>
       );
     },
   },
   {
     description: "Seguro de Vida",
-    title: "Seguro de Vida",
+    title: "Apoyo en Educación.",
     src: "https://olelife.com/wp-content/uploads/2021/11/Ole-Life-_-Seguro-de-vida-1200x675.jpg",
     ctaText: "Ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          De acuerdo a cada uno de nuestros contratos laborales procuramos
-          establecer un seguro de vida de acuerdo a la cuota sindical, siendo
-          este seguro de vida solventado de manera directa por nuestro
-          sindicato, en donde la cobertura se define con respecto a la
-          negociación de afiliados.
+          Servicio cubierto por convenio con el SITS, obteniendo un 30% de
+          descuento con instituciones. • Preparatoria. • Licenciatura. •
+          Maestría. • Doctorado.
         </p>
       );
     },
   },
   {
     description: "Directorio de Descuentos.",
-    title: "Descuentos",
+    title: "Programa de Nutrición y Psicología.",
     src: "https://cdn.shopify.com/s/files/1/0229/0839/files/Blog_Banner.jpg?2814",
     ctaText: "Ver",
     ctaLink: "https://ui.aceternity.com/templates",
     content: () => {
       return (
         <p>
-          En cada Estado y Municipio nos comprometemos a establecer convenios
-          diferenciales y reales con todo tipo de consumo inmediato; y lo puede
-          hacer valer nuestros afiliados presentando la credencial del
-          Sindicato, cuyo costo es negociada con cada Empresa al momento de la
-          negociación del contrato colectivo.
+          Servicio cubierto por el SITS, programa que brinda asesoría y revisión
+          por especialistas en el tema, con la finalidad de ayudar a cada
+          compañero que así lo necesite.
         </p>
       );
     },
   },
   {
     description: "Becas Educativas",
-    title: "Becas",
+    title: "Programa de Asistencia Médica.",
     src: "https://s.yimg.com/ny/api/res/1.2/BLyCSLYszu3OpxhkbcLpAA--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTQyNw--/https://media-mbst-pub-ue1.s3.amazonaws.com/creatr-images/2019-10/adfac2b0-f774-11e9-97bf-9bd32ebc95bd",
     ctaText: "Ver",
     ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     content: () => {
       return (
         <p>
-          Nuestro Sindicato esta comprometido con la Educación en todos los
-          niveles, y se compromete con las Empresas afiliadas a destinar un
-          pordcentaje de la cuota sindical para establecer un programa de becas
-          de acuerdo a la situación económica y calificaciones de los hijos de
-          nuestros trabajadores afiliados.
+          Servicio cubierto por el SITS, programa que brinda revisión, consulta
+          médica por especialistas, con la finalidad de ayudar a cada compañero
+          que así lo necesite.
         </p>
       );
     },
   },
   {
     description: "Convenios Estrategicos",
-    title: "Convenios Estrategicos",
+    title: "Apoyo en Tramite de Licencias de Conducción.",
     src: "https://images.ctfassets.net/q8ats8vjtyuf/3NpYhqSN0nDUQZfaQmtdDz/abcd21ba62f1d4cd628d19cfc741cf97/alianzas-estrategicas-empresas.jpg",
     ctaText: "Ver",
     ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     content: () => {
       return (
         <p>
-          Nuestro Sindicato consciente en ser la mejor opción de la sindicación
-          en México, Estados Unidos y Canada; se compromete a establecer
-          convenios estratégicos, que generen una mejor calidad de vida para los
-          trabajadores y sus familias en el sector Educativo, Salud, Recreativo
-          y Cultural; de acuerdo a la necesidad de cada Estado y Municipio.
+          Servicio cubierto por Dependencias e Instituciones Públicas y Privadas
+          de acuerdo con el convenio firmado por el SITS. LICENCIAS FEDERALES
+          20% (Descuento en Tramite Total) ASESORIA. CURSO. APTO MEDICO TRAMITE
+          ANTE DEPENDENCIA.
         </p>
       );
     },
   },
   {
     description: "Asesoría de Vivienda",
-    title: "Asesoría de Vivienda",
+    title: "Apoyo en Medicamento.",
     src: "https://img1.wsimg.com/isteam/ip/6a53e45a-bb45-4815-9966-560df901960e/1488233817-4089.jpg",
     ctaText: "Ver",
     ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     content: () => {
       return (
         <p>
-          Apoyamos a nuestros afiliados con asesoría y cálculo de puntos
-          disponibles para vivienda, y en la tramitación de su crédito; así como
-          en los trámites de recuperación de aportaciones de vivienda y créditos
-          para ampliación y mejora de vivienda; asegurando que haya continuidad
-          en las aportaciones del IMSS para tener acceso a estos beneficios.
+          Descuento en medicamento Genérico, Marca y Similar. *aplica
+          restricciones
         </p>
       );
     },
   },
   {
     description: "Asesoría gratuita",
-    title: "Modalidad 40",
+    title: " Apoyo en boletos de autobús.",
     src: "https://cdn-3.expansion.mx/dims4/default/a6a3d5e/2147483647/strip/true/crop/1800x942+0+0/resize/1800x942!/format/webp/quality/80/?url=https%3A%2F%2Fcdn-3.expansion.mx%2Ff3%2F4a%2Fe0fe4c6248c0bfe218afa443657a%2Fmodalidad-40-imss-2024.jpg",
     ctaText: "Ver",
     ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     content: () => {
       return (
         <p>
-          Conscientes de que los trabajadores han trabajado 42 años o más,
-          algunos con un salario promedio bajo y requieren continuar con su
-          calidad de vida familiar; nuestro Sindicato ofrece asesoría
-          profesional para que nuestros afiliados tengan la mejor pensión
-          posible con su salario promedio o con financiamiento de la modalidad
-          40
+          Descuento en la compra de boletos de autobús. *aplica restricciones
         </p>
       );
     },
   },
   {
     description: "Ayuda económica",
-    title: "Gastos Funerarios",
+    title: "Apoyo en Boiler Sola",
     src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
     ctaText: "Ver",
     ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     content: () => {
       return (
         <p>
-          Nuestro Sindicato esta consciente de las dificultades por las que pasa
-          nuestros afiliados en caso de fallecimiento o Incapacidad Total
-          Permanente; así como el probable fallecimiento de su conyuge o pareja
-          en concubinato y los hijos que dependen de nuestro afiliado, es por
-          esto que ofrece una ayuda económica para este tipo de contingencia con
-          entrega inmediata de la la misma mediante una cuota mensual baja;
-          gracias a que la ayuda no es a través de ninguna empresa
-          especializada, sino a través de esta aportación simbólica; misma que
-          puede ser cubierta con la misma cuota sindical de cuerdo al contrato
-          colectivo y número de afiliados.
+          Descuento en la compra de boiler solar. • 10 tubos. • 15 tubos. • 20
+          tubos. *aplica restricciones
+        </p>
+      );
+    },
+  },
+  {
+    description: "Ayuda económica",
+    title: "Apoyo en Escuela de manejo.",
+    src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
+    ctaText: "Ver",
+    ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    content: () => {
+      return (
+        <p>
+          Servicio brindado por escuelas de manejo en autotransporte federal.
+          20% descuento en el servicio total.
+        </p>
+      );
+    },
+  },
+  {
+    description: "",
+    title: "Programa de seguro de Vida",
+    src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
+    ctaText: "Ver",
+    ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    content: () => {
+      return (
+        <p>
+          Servicio brindado por aseguradoras. *Aportación extra a la cuota
+          mensual. Depende: 1.- Monto asegurado. 2.- Edad del agremiado.
+          Contrato elaborado entre agremiado y aseguradora.
+        </p>
+      );
+    },
+  },
+
+  {
+    description: "",
+    title: "Asesoría para tramitar un plan de pensión y modalidad 40",
+    src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
+    ctaText: "Ver",
+    ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    content: () => {
+      return (
+        <p>
+          Nuestro sindicato ofrece asesoría profesional para que nuestros
+          afiliados tengan la mejor pensión posible con su salario promedio o
+          con financiamiento de la modalidad 40.
+        </p>
+      );
+    },
+  },
+
+  {
+    description: "",
+    title: "Asesoría para vivienda",
+    src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
+    ctaText: "Ver",
+    ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    content: () => {
+      return (
+        <p>
+          Apoyamos a nuestros afiliados con asesoría y cálculo de puntos
+          disponibles para vivienda, y en la tramitación de crédito; así como en
+          los tramites de recuperación de aportaciones de vivienda y créditos
+          para ampliación y mejora de vivienda; asegurando que haya continuidad
+          en las aportaciones del IMSS para tener acceso a estos beneficios.
+        </p>
+      );
+    },
+  },
+
+  {
+    description: "",
+    title: "Apoyo en Servicio Automotriz.",
+    src: "https://bruno.com.mx/wp-content/uploads/2021/05/morir-cuesta-caro-01.png",
+    ctaText: "Ver",
+    ctaLink: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    content: () => {
+      return (
+        <p>
+          Servicio mecánico por talleres certificados y establecidos legalmente.
+          Convenio de descuento firmado por el SITS.
         </p>
       );
     },

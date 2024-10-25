@@ -34,12 +34,21 @@ function Landing() {
             Fuerza sindical en Norteamérica
           </h2>
           <p className="text-white mt-9 ">
-            Somos un sindicato nacional que brinda herramientas de calidad y
-            beneficios tangibles para trabajadores y sus familias.
+            Somos un sindicato Nacional enfocado al beneficio integral del
+            sector trabajador y empresarial con herramientas de primer nivel y
+            con un beneficio tangible para los trabajadores y su familia.
           </p>
           <div className="flex flex-row gap-5 mt-10">
-            <Button onClick={() => navigate("/login")} className="h-12 text-white transition bg-red-400 w-28 hover:scale-105 hover:bg-red-500">Comenzar</Button>
-            <Button onClick={() => navigate("/register")} className="h-12 transition bg-transparent border border-white hover:bg-white w-28 hover:scale-105">
+            <Button
+              onClick={() => navigate("/login")}
+              className="h-12 text-white transition bg-red-400 w-28 hover:scale-105 hover:bg-red-500"
+            >
+              Comenzar
+            </Button>
+            <Button
+              onClick={() => navigate("/register")}
+              className="h-12 transition bg-transparent border border-white hover:bg-white w-28 hover:scale-105"
+            >
               Registrarse
             </Button>
           </div>
@@ -60,7 +69,9 @@ function Landing() {
       >
         {/* Titulo */}
         <div className="px-10 mb-10 lg:w-1/3">
-          <h3 className="text-5xl font-bold"><span className="text-yellow-400">Valores</span> y Alcances</h3>
+          <h3 className="text-5xl font-bold">
+            <span className="text-yellow-400">Valores</span> y Alcances
+          </h3>
           <p className="text-lg mt-3 text-[#626479]">
             Nuestro sindicato ofrece beneficios integrales y económicos, como
             apoyo laboral, acceso a vivienda, asistencia médica y representación
@@ -119,10 +130,10 @@ function Landing() {
               <span className="text-[#FF8906]"> Misión</span>
             </h3>
             <p className="text-base md:text-lg text-[#626479] mt-7">
-              Nuestra visión es ser un sindicato nacional reconocido por apoyar
-              el bienestar laboral en México y el T-MEC. Nuestra misión es
-              ofrecer beneficios económicos significativos y apoyar a las
-              empresas en salud, seguridad, y aspectos jurídicos y familiares.
+              Brindar los beneficios Económicos con más impacto en el bolsillo
+              del trabajador y su familia y apoyar a las empresas afiliadas a
+              generar valor en esquemas de salud, seguridad laboral, jurídica y
+              familiar.
             </p>
           </div>
         </div>
@@ -184,6 +195,18 @@ function Landing() {
             alt="Descripción de la imagen"
             className="h-auto max-w-full"
           />
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center">
+        <div className="w-full max-w-3xl rounded-lg overflow-hidden shadow-lg">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3644.9923233106074!2d-104.66184358837391!3d23.996048178413904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x869bc782714abe51%3A0x105e7e3cc86d5d88!2sSITS%20Sindicato%20de%20la%20Industria%20del%20Transporte%20y%20sus%20Servicios.!5e0!3m2!1ses-419!2smx!4v1729835185084!5m2!1ses-419!2smx"
+            width="100%"
+            height="450"
+            loading="lazy"
+            className="w-full"
+          ></iframe>
         </div>
       </div>
 

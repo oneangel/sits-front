@@ -14,20 +14,22 @@ const UserDetails: React.FC = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(`https://sits.onrender.com/api/users/${userId}`);
+        const response = await axios.get(
+          `https://sits.onrender.com/api/users/${userId}`
+        );
         console.log(response.data); // Verifica aquí qué datos estás recibiendo
         setUser(response.data);
       } catch (error) {
         if (error.response) {
-          console.error(`Error: ${error.response.status} - ${error.response.data}`);
+          console.error(
+            `Error: ${error.response.status} - ${error.response.data}`
+          );
         } else {
           console.error("Network error or other issue:", error.message);
         }
         setError("Usuario no encontrado.");
       }
-      
     };
-    
 
     if (userId) {
       fetchUser();
@@ -35,9 +37,7 @@ const UserDetails: React.FC = () => {
       setError("ID de usuario no proporcionado.");
       setIsLoading(false);
     }
-    
   }, [userId]);
-
 
   if (error) {
     return <div>{error}</div>;
@@ -46,6 +46,7 @@ const UserDetails: React.FC = () => {
   return (
     <>
       <nav></nav>
+
       <div className="flex flex-col items-center justify-center h-screen mx-auto my-auto">
         {user && <UserCard {...user} />}
       </div>
